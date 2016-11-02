@@ -1,0 +1,30 @@
+{%if not error%}
+<nav aria-label="...">
+  <ul class="pager">
+    <li class="previous {%if not rows.has_previous%} disabled {%endif%}">
+      <a href={%if not rows.has_previous%}"javascript:return false"
+      {%else%} "?pagina=1
+      {%if buscar%}&buscar={{buscar}}{%endif%}"
+      {%endif%} >Primero</a>
+    </li>
+    <li class="{%if not rows.has_previous%} disabled {%endif%}">
+      <a href={%if not rows.has_previous%}"javascript:return false"
+      {%else%} "?pagina={%if rows.has_previous%}{{rows.previous_page_number}}{%endif%}
+      {%if buscar%}&buscar={{buscar}} {%endif%}"
+      {%endif%} >&larr; Anterior</a>
+    </li>
+    <li class="{%if not rows.has_next%} disabled {%endif%}">
+      <a href={%if not rows.has_next%}"javascript:return false"
+      {%else%} "?pagina={%if rows.has_next%}{{rows.next_page_number}}{%endif%}
+      {%if buscar%}&buscar={{buscar}} {%endif%}"
+      {%endif%} >Siguiente &rarr;</a>
+    </li>
+    <li class="next {%if not rows.has_next%} disabled {%endif%}">
+      <a href={%if not rows.has_next%}"javascript:return false"
+      {%else%} "?pagina={{rows.paginator.num_pages}}
+      {%if buscar%}&buscar={{buscar}} {%endif%}"
+      {%endif%} >&Uacute;ltimo</a>
+    </li>
+  </ul>
+</nav>
+{%endif%}
