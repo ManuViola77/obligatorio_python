@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"> </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <meta charset="utf-8">
+  <title>{%block header_title%}{%endblock%}</title>
+  {%block javascript%} {%endblock%}
+</head>
+<body>
+  <div class="container">
+    {#inicio bloque header#}
+    {%block header%}
+      <!-- <h1>HEADER APP</h1>-->
+      {%block nav_menu%}
+        <nav class="navbar">
+          <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/">DCB(Aca Logo)</a>
+              <!--<img alt="Brand" src="ticket.jpg">-->
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                <li><a href="/categorias">Categor&iacute;as<span class="sr-only">(current)</span></a></li>
+                <li><a href="/lugares">Lugares<span class="sr-only">(current)</span></a></li>
+                <li><a href="/sectores">Sectores<span class="sr-only">(current)</span></a></li>
+                <li><a href="/asientos">Asientos<span class="sr-only">(current)</span></a></li>
+                <li><a href="/eventos">Eventos<span class="sr-only">(current)</span></a></li>
+                <li><a href="/preciosentradas">Precios Entradas<span class="sr-only">(current)</span></a></li>
+                <li><a href="/entradas">Entradas<span class="sr-only">(current)</span></a></li>
+              </ul>
+              {%block nav_search%}
+                {%include "layout/search.html"%}
+              {%endblock%}
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+        </nav>
+      {%endblock%}<!-- nav -->
+      <h2>{%block title%}{%endblock%}</h2>
+    {%endblock%}<!-- header -->
+    {#fin bloque header#}
+    {#fin bloque content#}
+    {%block content%}
+      {%block pagination%}
+        {%include "layout/pagination.html"%}
+      {%endblock%}
+    {%endblock%}
+    {#fin bloque content#}
+    {#inicio bloque footer#}
+    {%block footer%}
+      <br>
+      <br>
+      <h5 align="right">Obligatorio Python 2016 - Sisinfo - Pablo Perdomo y Manuela Viola</h5>
+    {%endblock%}
+    {#fin bloque footer#}
+  </div>
+</body>
+</html>

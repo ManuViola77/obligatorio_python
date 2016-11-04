@@ -1,0 +1,8 @@
+<form class="navbar-form navbar-right" method="get">
+  <!--para POST
+  {% csrf_token %} Cross-site request forgery -->
+  <div class="form-group">
+    <input type="text" name="buscar" class="form-control" placeholder="Buscar..." value="{% if buscar %}{{buscar}}{%endif%}">
+  </div>
+  <button type="submit" class="btn btn-default">Buscar</button>
+</form>
