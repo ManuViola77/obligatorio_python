@@ -1,6 +1,6 @@
 <script type="text/javascript">
   $(document).ready(function(){
-    {%if not rows%}
+    {%if not rows and buscar%}
       toastr.info('No se encontraron resultados para la busqueda "{{buscar}}"','info');
     {%endif%}
     {%if messages%}
