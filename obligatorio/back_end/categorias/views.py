@@ -78,7 +78,7 @@ def save(request,id = None):
                 C2 = Categoria.objects.get(codigo=C.codigo)
                 if id:
                     if C2 != C:
-                        raise Exception("Codigo de Categoria {} ya existe ({})".format(C.codigo,C.nombre))
+                        raise Exception("Codigo de Categoria {} ya existe ({})".format(C.codigo,C2.nombre))
                 else:
                     raise Exception("Codigo de Categoria {} ya existe ({})".format(C.codigo,C2.nombre))
                 

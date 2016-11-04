@@ -78,7 +78,7 @@ def save(request,id = None):
                 L2 = Lugar.objects.get(codigo=L.codigo)
                 if id:
                     if L2 != L:
-                        raise Exception("Codigo de Lugar {} ya existe ({})".format(L.codigo,L.nombre))
+                        raise Exception("Codigo de Lugar {} ya existe ({})".format(L.codigo,L2.nombre))
                 else:
                     raise Exception("Codigo de Lugar {} ya existe ({})".format(L.codigo,L2.nombre))
                 
