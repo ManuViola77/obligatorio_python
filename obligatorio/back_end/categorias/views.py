@@ -15,7 +15,7 @@ def index(request):
     usuario = request.GET.get("usuario")
     buscar = request.GET.get("buscar") # buscar = nombre del campo que quiero o del parametro de url
     pagina = request.GET.get("pagina")
-    messages = get_messages(request)
+    message = get_messages(request)
     render = {}
     categorias = Categoria.objects.all()
     
@@ -46,7 +46,7 @@ def index(request):
     render['rows'] = categorias
     render['buscar'] = buscar
     render['pagina'] = pagina
-    render['messages'] = messages
+    render['messages'] = message
     # template tiene parametro {} diccionario de parametros que envio para el template
     return HttpResponse(template.render(render,request))
 
