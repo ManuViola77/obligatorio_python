@@ -9,4 +9,4 @@ class Entrada(models.Model):
     documento = models.CharField(max_length = 11, null = True)
     usada = models.BooleanField(default = False)
     Evento = models.ForeignKey(Evento)
-    Asiento = models.ForeignKey(Asiento)
+    Asiento = models.ForeignKey(Asiento,unique = True)

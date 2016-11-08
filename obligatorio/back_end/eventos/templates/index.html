@@ -2,8 +2,8 @@
 {%block javascript%}
   {%include "templates/javascripts/mensajes.js"%}
 {%endblock%}
-{%block header_title%}Lugares{%endblock%}
-{%block title%} Lugares{%endblock%}
+{%block header_title%}Eventos{%endblock%}
+{%block title%} Eventos{%endblock%}
 {%block content%}
 <table class="table table-hover">
   <thead>
@@ -17,37 +17,62 @@
       Nombre
     </th>
     <th>
-      Direcci&oacute;n
+      Descripci&oacute;n
     </th>
     <th>
-      Tel&eacute;fono
+      Fecha
     </th>
     <th>
-      <a href="/lugares/save/" title ="Agregar Lugar"><span class="glyphicon glyphicon-plus pull-right"></span></a>
+      Detalle
+    </th>
+    <th>
+      Afiche
+    </th>
+    <th>
+      Categor&iacute;a
+    </th>
+    <th>
+      Lugar
+    </th>
+    <th>
+      <a href="/eventos/save/" title ="Agregar Evento"><span class="glyphicon glyphicon-plus pull-right"></span></a>
     </th>
   </thead>
   {# {%sentencias$} {{variabes}} #}
-  {%for L in rows%}
+  {%for E in rows%}
   <tbody>
     <tr>
       <td>
-        {{L.id}}
+        {{E.id}}
       </td>
       <td>
-        {{L.codigo}}
+        {{E.codigo}}
       </td>
       <td>
-        {{L.nombre}}
+        {{E.nombre}}
       </td>
       <td>
-        {{L.direccion}}
+        {{E.descripcion}}
       </td>
       <td>
-        {{L.telefono}}
+        {{E.fecha}}
       </td>
       <td>
-        <a href="/lugares/save/{{L.id}}"><span class="glyphicon glyphicon-edit" title="Editar {{L.nombre}}"></span></a>
-        <a class="borrar" id="{{L.id}}" href="/lugares/delete/{{L.id}}" onclick="return confirm('Seguro que desea eliminar el lugar {{L.codigo}} - {{L.nombre}}?');"><span class="glyphicon glyphicon-trash" title="Eliminar {{L.nombre}}"></span></a>
+        {{E.detalle}}
+      </td>
+      <td>
+        {{E.afiche}}
+      </td>
+      <td>
+        {{E.Categoria.nombre}}
+      </td>
+      <td>
+        {{E.Lugar.nombre}}
+      </td>
+      <td>
+        <a href="/eventos/save/{{E.id}}"><span class="glyphicon glyphicon-edit" title="Editar {{E.nombre}}"></span></a>
+        <a class="borrar" id="{{E.id}}" href="/eventos/delete/{{E.id}}" onclick="return confirm('Seguro que desea eliminar el lugar {{E.codigo}} - {{E.nombre}}?');"><span class="glyphicon glyphicon-trash" title="Eliminar {{E.nombre}}"></span></a>
+        <a href="/entradas/{{E.id}}"><span class="glyphicon glyphicon-list" title="Agregar Entradas para {{E.nombre}}"></span></a>
       </td>
     </tr>
   </tbody>

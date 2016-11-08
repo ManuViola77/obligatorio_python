@@ -4,33 +4,36 @@ from django.template import loader
 from django.contrib import messages
 from django.contrib.messages import get_messages
 from django.core.paginator import Paginator,InvalidPage,PageNotAnInteger
+from django import forms
 
 # Create your views here.
 
+from back_end.Categoria import Categoria
 from back_end.Lugar import Lugar
+from back_end.Evento import Evento
 
 def index(request):
     #instancio Template
-    template = loader.get_template('lugares/templates/index.html')
+    template = loader.get_template('eventos/templates/index.html')
     usuario = request.GET.get("usuario")
     buscar = request.GET.get("buscar") # buscar = nombre del campo que quiero o del parametro de url
     pagina = request.GET.get("pagina")
     message = get_messages(request)
     render = {}
-    lugares = Lugar.objects.all()
+    eventos = Evento.objects.all()
     
     error = False
     if not pagina:
         pagina = 1
         
     if buscar is not None:
-        lugares = lugares.filter(nombre__icontains=buscar)
+        eventos = eventos.filter(nombre__icontains=buscar)
     try:
         #Query set y cantidad de registros por pagina
-        lugares = lugares.order_by('nombre','codigo') #'-nombre' para descendente
-        paginator = Paginator(lugares,10)
+        eventos = eventos.order_by('nombre','codigo') #'-nombre' para descendente
+        paginator = Paginator(eventos,10)
         #paginado
-        lugares = paginator.page(int(pagina))
+        eventos = paginator.page(int(pagina))
     except InvalidPage:
             error = True
             messages.error(request,"Numero de pagina no valida")
@@ -43,7 +46,7 @@ def index(request):
     
     render['error'] = error
     render['usuario'] = usuario
-    render['rows'] = lugares
+    render['rows'] = eventos
     render['buscar'] = buscar
     render['pagina'] = pagina
     render['messages'] = message
@@ -51,51 +54,75 @@ def index(request):
     return HttpResponse(template.render(render,request))
 
 def save(request,id = None):   
-    template    = loader.get_template('lugares/templates/save.html') 
+    template    = loader.get_template('eventos/templates/save.html') 
     render      = {} #diccionario para pasar a la vista
-    L           = Lugar() #instancio Lugar
+    E           = Evento() #instancio Evento
+    categorias = Categoria.objects.all()
+    lugares = Lugar.objects.all()
     try:
         if id:#Update
             try:
-                L = Lugar.objects.get(pk=id)
-            except Lugar.DoesNotExist:
+                E = Evento.objects.get(pk=id)
+            except Evento.DoesNotExist:
                 messages.error(request,'Identificador no valido')
-                return redirect('/lugares')
+                return redirect('/eventos')
         #si postean form
+        #form = forms(request.POST, request.FILES)
+        #if form.is_valid():
+            #E.afiche = request.FILES['afiche']
+        
         do_submit = request.POST.get("do_submit")
         if do_submit:
             for key,value in request.POST.items():
-                if hasattr(L, key):
-                    setattr(L, key, value)            
+                if hasattr(E, key):
+                    setattr(E, key, value)            
             
-            required = ['codigo','nombre']
+            #grabo categoria
+            if request.POST.get("categoria"):
+                #programacion defensiva (validar que exista pk)
+                CategoriaEvento = Categoria.objects.get(pk=request.POST.get("categoria"))
+                E.Categoria = CategoriaEvento
+                
+            #grabo lugar
+            if request.POST.get("lugar"):
+                #programacion defensiva (validar que exista pk)
+                LugarEvento = Lugar.objects.get(pk=request.POST.get("lugar"))
+                E.Lugar = LugarEvento
+            
+            #ver que hacer con afiche...... 
+            required = ['codigo','nombre','fecha','detalle']
             for r in required:
-                if not getattr(L, r):
-                    raise Exception("Se deben ingresar los campos Codigo y Nombre.")
+                if not getattr(E, r):
+                    raise Exception("Se deben ingresar los datos obligatorios.")
+            if not E.Categoria or not E.Lugar:
+                raise Exception("Se deben ingresar los datos obligatorios.")
             
             #valido por ej que no exista codigo
             try:
-                L2 = Lugar.objects.get(codigo=L.codigo)
+                E2 = Evento.objects.get(codigo=E.codigo)
                 if id:
-                    if L2 != L:
-                        raise Exception("Codigo de Lugar {} ya existe ({})".format(L.codigo,L2.nombre))
+                    if E2 != E:
+                        raise Exception("Codigo de Evento {} ya existe ({})".format(E.codigo,E2.nombre))
                 else:
-                    raise Exception("Codigo de Lugar {} ya existe ({})".format(L.codigo,L2.nombre))
+                    raise Exception("Codigo de Evento {} ya existe ({})".format(E.codigo,E2.nombre))
                 
-            except Lugar.DoesNotExist:
+            except Evento.DoesNotExist:
                 pass
-            L.save()
+            E.save()
             
             if not id:
-                L = None
-            render['success'] = "El lugar se ha {} correctamente...".format('actualizado' if id else 'ingresado')  
+                E = None
+            render['success'] = "El evento se ha {} correctamente...".format('actualizado' if id else 'ingresado')  
             
             
     except Exception as e:
         #Si "algo" me lanza una exception, lo muestro en el template
         render['error'] = e
     #render["id"] = id
-    render["L"] = L
+    render["E"] = E
+    render["categorias"] = categorias
+    render["lugares"] = lugares
+
     return HttpResponse(template.render(render,request))
 
 
@@ -107,14 +134,14 @@ def delete(request,id):
         msg   = "Identificador no valido"
     else:
         try:
-            L = Lugar.objects.get(pk = id)
-        except Lugar.DoesNotExist:
+            E = Evento.objects.get(pk = id)
+        except Evento.DoesNotExist:
             error = True
             msg   = "Identificador no valido"
     if not error:       
-        L.delete()
-        messages.success(request,"El Lugar se ha eliminado correctamente...")
+        E.delete()
+        messages.success(request,"El Evento se ha eliminado correctamente...")
     else:
         messages.error(request,msg)
-    return redirect("/lugares")
+    return redirect("/eventos")
 

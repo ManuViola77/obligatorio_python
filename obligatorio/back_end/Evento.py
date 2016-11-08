@@ -8,6 +8,6 @@ class Evento(models.Model):
     descripcion = models.CharField(max_length = 100, null = True)
     fecha = models.DateTimeField()
     detalle = models.CharField(max_length = 50)
-    afiche = models.ImageField()
+    afiche = models.ImageField(null = True)
     Categoria = models.ForeignKey(Categoria)
     Lugar = models.ForeignKey(Lugar)
