@@ -145,3 +145,18 @@ def delete(request,id):
         messages.error(request,msg)
     return redirect("/eventos")
 
+def display(request,id):
+    template    = loader.get_template('eventos/templates/display.html') 
+    render      = {} #diccionario para pasar a la vista
+    if not id:
+        messages.error(request,'Identificador no valido')
+        return redirect('/eventos')
+    else:
+        try:
+            E = Evento.objects.get(pk=id)
+        except Evento.DoesNotExist:
+            messages.error(request,'Identificador no valido')
+            return redirect('/eventos')
+        render["E"] = E
+    
+        return HttpResponse(template.render(render,request))

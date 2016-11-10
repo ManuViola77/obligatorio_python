@@ -20,4 +20,5 @@ urlpatterns = [
     url(r'^/{0,1}$', views.index),
     url(r'^/save/(\d+)?$', views.save),
     url(r'^/delete/(\d+)$', views.delete),
+    url(r'^/display/(\d+)$', views.display),
 ]

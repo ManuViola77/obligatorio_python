@@ -22,7 +22,7 @@ def index(request,evento):
     
     if not evento:
         error = True
-        messages.error(request,"Debe tener un lugar asociado.")
+        messages.error(request,"Debe tener un evento asociado.")
     else: 
         eventoEntrada = Evento.objects.get(pk = evento)
         entradas = Entrada.objects.all()
@@ -71,16 +71,34 @@ def save(request,evento,id = None):
         error = True
         messages.error(request,"Debe tener un evento asociado.")
     else: 
+        try:
+            if id:#Update
+                try:
+                    E = Entrada.objects.get(pk=id)
+                except Entrada.DoesNotExist:
+                    messages.error(request,'Identificador no valido')
+                    return redirect('/entradas/'+evento)
+            else:
+                E = Entrada()
+        except Exception as e:
+            #Si "algo" me lanza una exception, lo muestro en el template
+            render['error'] = e
+                    
         eventoEntrada  = Evento.objects.get(pk = evento) #instancio Evento
         asientos = Asiento.objects.filter(Sector__LugarSector = eventoEntrada.Lugar)
         entradasVendidas = Entrada.objects.filter(Asiento__Sector__LugarSector = eventoEntrada.Lugar)
         for ent in entradasVendidas:
-            asientos = asientos.exclude(pk=ent.Asiento.id)
+            if not id:
+                asientos = asientos.exclude(pk=ent.Asiento.id)
+            else:
+                if ent.Asiento.id != E.Asiento.id:
+                    asientos = asientos.exclude(pk=ent.Asiento.id)
+            
         asientos = asientos.order_by('Sector__nombre','numero')
         if not asientos: 
             messages.error(request,"El lugar del evento no tiene asientos asignados.")
             return redirect('/entradas/'+evento)
-        E = Entrada()
+        
         try:
             if id:#Update
                 try:

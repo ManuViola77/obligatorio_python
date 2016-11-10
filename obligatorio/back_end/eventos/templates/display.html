@@ -1,0 +1,111 @@
+{%extends "templates/layout/base.html"%}
+{%block javascript%}
+  {%include "templates/javascripts/mensajes_save.js"%}
+{%endblock%}
+{%block header_title%}Lugar{%endblock%}
+{%block nav_menu%}{%endblock%}
+{%block title%} Visualizar Evento "{{E.nombre}}"{%endblock%}
+{%block content%}
+
+  <table class = "table" border="0">
+    <thead>
+
+    </thead>
+
+    <tbody>
+        <tr>
+          <td>
+            <b>C&oacute;digo:</b>
+          </td>
+          <td>
+            {{E.codigo}}
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <b>Nombre:</b>
+          </td>
+          <td>
+            {{E.nombre}}
+          </td>
+
+        </tr>
+
+        <tr>
+          <td>
+            <b>Descripci&oacute;n:</b>
+          </td>
+          <td>
+            {{E.descripcion}}
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <b>Lugar:</b>
+          </td>
+          <td>
+            {{E.Lugar.nombre}}
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <b>Fecha:</b>
+          </td>
+          <td>
+            {{E.fecha.date}}
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <b>Hora:</b>
+          </td>
+          <td>
+            {{E.fecha.time}}
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <b>Categor&iacute;a:</b>
+          </td>
+          <td>
+            {{E.Categoria.nombre}}
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <b>Detalle:</b>
+          </td>
+          <td>
+            {{E.detalle}}
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <b>Afiche:</b>
+          </td>
+          <td>
+            Aca iria el afiche... (foto)
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+
+          </td>
+          <td>
+
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <center><button type="button" class="btn btn-default pull-middle" onclick="javascript:window.location.href = '/eventos/'" >Cerrar</button></center>
+
+{%endblock%}

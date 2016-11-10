@@ -8,9 +8,6 @@
 <table class="table table-hover">
   <thead>
     <th>
-      #
-    </th>
-    <th>
       Tel&eacute;fono
     </th>
     <th>
@@ -31,9 +28,6 @@
   <tbody>
     <tr>
       <td>
-        {{E.id}}
-      </td>
-      <td>
         {{E.telefono}}
       </td>
       <td>
@@ -47,7 +41,7 @@
       </td>
       <td>
         <a href="/entradas/save{{evento.id}}/{{E.id}}"><span class="glyphicon glyphicon-edit" title="Editar Entrada {{E.Asiento.numero}}"></span></a>
-        <a class="borrar" id="{{E.id}}" href="/entradas/delete{{evento.id}}/{{E.id}}" onclick="return confirm('Seguro que desea eliminar la entrada {{E.Asiento.numero}}?');"><span class="glyphicon glyphicon-trash" title="Eliminar Entrada {{E.Asiento.numero}}"></span></a>
+        <a class="borrar" id="{{E.id}}" href="/entradas/delete{{evento.id}}/{{E.id}}" onclick="return confirm('Seguro que desea eliminar la entrada {{E.Asiento.Sector.nombre}} - Asiento {{E.Asiento.numero}}?');"><span class="glyphicon glyphicon-trash" title="Eliminar Entrada {{E.Asiento.Sector.nombre}} - Asiento {{E.Asiento.numero}}"></span></a>
       </td>
     </tr>
   </tbody>

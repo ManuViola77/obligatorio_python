@@ -8,15 +8,14 @@
           for (var r = 0, n = table.rows.length; r < n; r++) {
                   table.rows[r].insertCell(3);
                   if (r == 0) {
-                    table.rows[r].cells[3].innerHTML =  "Cantidad de Asientos";
+                    table.rows[r].cells[3].innerHTML = table.rows[r].cells[2].innerHTML
+                    table.rows[r].cells[2].innerHTML =  "Cantidad de Asientos";
                     var tableHead = document.getElementById("tabla").getElementsByTagName("thead")[0];
                     tableHead.style.fontWeight = "bold";
                   } else {
-                    table.rows[r].cells[3].innerHTML =  {{asientos}}[r-1] ;
+                    table.rows[r].cells[2].innerHTML =  {{asientos}}[r-1] ;
                   }
-
           }
-
 			}
 		</script>
 {%endblock%}
@@ -25,9 +24,6 @@
 {%block content%}
 <table class="table table-hover" id="tabla">
   <thead>
-    <th>
-      #
-    </th>
     <th>
       C&oacute;digo
     </th>
@@ -42,9 +38,6 @@
   {%for S in rows%}
   <tbody>
     <tr>
-      <td>
-        {{S.id}}
-      </td>
       <td>
         {{S.codigo}}
       </td>

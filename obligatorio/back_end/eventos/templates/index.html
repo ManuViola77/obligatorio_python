@@ -8,9 +8,6 @@
 <table class="table table-hover">
   <thead>
     <th>
-      #
-    </th>
-    <th>
       C&oacute;digo
     </th>
     <th>
@@ -20,19 +17,16 @@
       Descripci&oacute;n
     </th>
     <th>
+      Lugar
+    </th>
+    <th>
       Fecha
     </th>
     <th>
-      Detalle
-    </th>
-    <th>
-      Afiche
+      Hora
     </th>
     <th>
       Categor&iacute;a
-    </th>
-    <th>
-      Lugar
     </th>
     <th>
       <a href="/eventos/save/" title ="Agregar Evento"><span class="glyphicon glyphicon-plus pull-right"></span></a>
@@ -43,9 +37,6 @@
   <tbody>
     <tr>
       <td>
-        {{E.id}}
-      </td>
-      <td>
         {{E.codigo}}
       </td>
       <td>
@@ -55,24 +46,23 @@
         {{E.descripcion}}
       </td>
       <td>
-        {{E.fecha}}
+        {{E.Lugar.nombre}}
       </td>
       <td>
-        {{E.detalle}}
+        {{E.fecha.date}}
       </td>
       <td>
-        {{E.afiche}}
+        {{E.fecha.time}}
       </td>
       <td>
         {{E.Categoria.nombre}}
       </td>
       <td>
-        {{E.Lugar.nombre}}
-      </td>
-      <td>
         <a href="/eventos/save/{{E.id}}"><span class="glyphicon glyphicon-edit" title="Editar {{E.nombre}}"></span></a>
         <a class="borrar" id="{{E.id}}" href="/eventos/delete/{{E.id}}" onclick="return confirm('Seguro que desea eliminar el lugar {{E.codigo}} - {{E.nombre}}?');"><span class="glyphicon glyphicon-trash" title="Eliminar {{E.nombre}}"></span></a>
-        <a href="/entradas/{{E.id}}"><span class="glyphicon glyphicon-list" title="Agregar Entradas para {{E.nombre}}"></span></a>
+        <a href="/eventos/display/{{E.id}}"><span class="glyphicon glyphicon-search" title="Visualizar Evento '{{E.nombre}}'"></span></a>
+        <a href="/preciosentradas/{{E.id}}"><span class="glyphicon glyphicon-usd" title="Agregar Precios de Entradas para {{E.nombre}}"></span></a>
+        <a href="/entradas/{{E.id}}"><span class="glyphicon glyphicon-plus" title="Agregar Entradas para {{E.nombre}}"></span></a>
       </td>
     </tr>
   </tbody>
