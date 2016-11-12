@@ -30,10 +30,9 @@
       <label for="detalle">Detalle:</label>
       <input type="text" maxlength="50" name="detalle" class="form-control" id="detalle" value="{%if E.detalle%}{{E.detalle}}{%endif%}">
     </div>
-    <!-- NO SE COMO ASIGNAR LA FOTO DEL AFICHE EN VIEWS!-->
     <div class="form-group">
       <label for="afiche">Afiche:</label>
-      <input type="file" maxlength="15" name="afiche" class="form-control" id="afiche" value="{%if E.afiche%}{{E.afiche}}{%endif%}">
+      <input type="file" name="afiche" class="form-control" id="afiche">
     </div>
     <div class="form-group">
       <label for="categoria">Categor&iacute;a</label>

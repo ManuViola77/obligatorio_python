@@ -64,7 +64,7 @@ def registrar(request):
             user = User.objects.create_user(username=usr,password=pwd)
             user.save()
             context['success'] = 'Usuario {} creado con exito'.format(usr)
-            return redirect("/back_end/signin")
+            #return redirect("/back_end/signin") #si dejo esto descomentado pierdo el cartel de usuario creado con exito
 
     except Exception as e:
         context["error"] = e
