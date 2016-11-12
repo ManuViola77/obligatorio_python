@@ -52,4 +52,11 @@
     text-align: right;
   }
 
+  img{
+    width:100%;
+    max-width:200px;
+    height:100%;
+    max-height:200px;
+  }
+
 </style>

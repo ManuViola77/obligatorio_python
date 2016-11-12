@@ -31,3 +31,9 @@ urlpatterns = [
     url(r'^back_end/signout/{0,1}$', views.signout),
     url(r'^back_end/registrar/{0,1}$', views.registrar),
 ]
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)

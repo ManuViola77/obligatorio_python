@@ -11,6 +11,7 @@ from django import forms
 from back_end.Categoria import Categoria
 from back_end.Lugar import Lugar
 from back_end.Evento import Evento
+from back_end.Afiche import Afiche,AficheForm
 
 def index(request):
     #instancio Template
@@ -69,8 +70,25 @@ def save(request,id = None):
         #si postean form
         #form = forms(request.POST, request.FILES)
         #if form.is_valid():
-            #E.afiche = request.FILES['afiche']
-        
+            #E.afiche = request.FILES['afiche']  
+            
+        try:
+            if request.POST:
+                print "Entre al post para afiche"
+                unForm = AficheForm(request.POST,request.FILES)
+                if unForm.is_valid():
+                    #sino lanzo una excepcion desde metodo clean
+                    print "Afiche valido"
+                    A = unForm.save()
+                    print "afiche exitoso"
+                    render["success"] = "Se grabo ok"
+                else:
+                    print "Error en afiche"
+                    render["error"] = unForm.errors
+        except Exception as e:
+            render["error"] = e    
+            
+               
         do_submit = request.POST.get("do_submit")
         if do_submit:
             for key,value in request.POST.items():
@@ -108,11 +126,15 @@ def save(request,id = None):
                 
             except Evento.DoesNotExist:
                 pass
+            if A:
+                E.Afiche = A
+                
             E.save()
             
             if not id:
                 E = None
             render['success'] = "El evento se ha {} correctamente...".format('actualizado' if id else 'ingresado')  
+            
             
             
     except Exception as e:
@@ -154,9 +176,15 @@ def display(request,id):
     else:
         try:
             E = Evento.objects.get(pk=id)
+            if E.Afiche: 
+                try:
+                    A = Afiche.objects.get(pk = E.Afiche.id)     
+                    render["A"] = A
+                except Afiche.DoesNotExist:
+                    raise Exception ("Afiche no existe")
         except Evento.DoesNotExist:
             messages.error(request,'Identificador no valido')
             return redirect('/back_end/eventos')
         render["E"] = E
-    
+        
         return HttpResponse(template.render(render,request))
