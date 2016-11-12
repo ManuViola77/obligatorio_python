@@ -5,10 +5,10 @@
 {%block nav_menu%}{%endblock%}
 {%block nav_search%}{%endblock%}
 {%block pagination%}{%endblock%}
-{%block header_title%}INICIO SESI&Oacute;N{%endblock%}
-{%block title%} INICIO SESI&Oacute;N{%endblock%}
+{%block header_title%}Registro de Usuario{%endblock%}
+{%block title%}Registro de Usuario{%endblock%}
 {%block content%}
-<form method="post" action="/back_end/signin">
+<form method="post" action="/back_end/registrar">
   {%csrf_token%}
     <div class="form-group">
       <label for="usuario">Ingrese Usuario:</label>
@@ -20,6 +20,6 @@
       <input type="password" name="password" maxlength="11" class="form-control" id="password">
     </div>
 
-    <button type="submit" class="btn btn-default pull-right" name="do_submit" value="1">Aceptar</button>
+    <button type="submit" class="btn btn-default pull-right" name="do_submit" value="1">Crear</button>
   </form>
 {%endblock%}

@@ -37,7 +37,7 @@
             <div class="container-fluid">
               <!-- Brand and toggle get grouped for better mobile display -->
               <div class="navbar-header">
-                <a class="navbar-brand texto" href="/back_end/">DCB(Aca Logo)</a>
+                <a class="navbar-brand texto glyphicon glyphicon-home" href="/back_end/" style="color:white"></a>
                 <!--<img alt="Brand" src="ticket.jpg">-->
               </div>
               <!-- Collect the nav links, forms, and other content for toggling -->
@@ -48,7 +48,7 @@
                   <li><a href="/back_end/eventos" class="texto">Eventos<span class="sr-only">(current)</span></a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                  <li><a href="/back_end/signout" class="texto">Cerrar Sesi&oacute;n<span class="sr-only texto">(current)</span></a></li>
+                  <li><a href="/back_end/signout" class="texto">Cerrar Sesi&oacute;n {{ user.get_username }}<span class="sr-only texto">(current)</span></a></li>
                 </ul>
                 {%block nav_search%}
                   {%include "layout/search.html"%}
