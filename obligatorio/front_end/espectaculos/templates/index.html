@@ -1,0 +1,53 @@
+{%extends "templates/layout/base.html"%}
+{%block javascript%}
+  {%include "templates/javascripts/mensajes.js"%}
+{%endblock%}
+{%block header_title%} Espect&aacute;culos {%endblock%}
+{%block title%} Espect&aacute;culos {%endblock%}
+{%block content%}
+<table class="table table-hover">
+  <thead>
+    <th>
+      Nombre
+    </th>
+    <th>
+      Descripci&oacute;n
+    </th>
+    <th>
+      Lugar
+    </th>
+    <th>
+      Fecha
+    </th>
+    <th>
+      Hora
+    </th>    
+  </thead>
+  {# {%sentencias$} {{variabes}} #}
+  {%for L in rows%}
+  <tbody>
+    <tr>
+      <td>
+        {{L.nombre}}
+      </td>
+      <td>
+        {{L.descripcion}}
+      </td>
+      <td>
+        {{L.Lugar.nombre}}
+      </td>
+      <td>
+        {{L.fecha.date}}
+      </td>
+      <td>
+        {{L.fecha.time}}
+      </td>      
+      <td>
+        <a href="/portal/espectaculos/detalle/{{L.id}}"><span class="glyphicon glyphicon-plus" title="Detalle {{L.nombre}}"></span></a>
+      </td>
+    </tr>
+  </tbody>
+  {%endfor%}
+</table>
+{{block.super}}
+{%endblock%}

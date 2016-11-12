@@ -1,0 +1,29 @@
+{%extends "templates/layout/base.html"%}
+{%block javascript%}
+  {%include "templates/javascripts/mensajes.js"%}
+{%endblock%}
+{%block header_title%}Categor&iacute;as de Espect&aacute;culos{%endblock%}
+{%block title%} Categor&iacute;as de Espect&aacute;culos{%endblock%}
+{%block content%}
+  <table class="table table-hover">
+    <thead>
+      <th>
+        Categor&iacute;a
+      </th>
+    </thead>
+    {# {%sentencias$} {{variabes}} #}
+    {%for L in rows%}
+    <tbody>
+      <tr>
+        <td>
+          {{L.nombre}}
+        </td>
+        <td>
+          <a href="/portal/espectaculos/{{L.id}}"><span class="glyphicon glyphicon-plus" title="Ver Espect&aacute;culos"></span></a>
+        </td>
+      </tr>
+    </tbody>
+    {%endfor%}
+  </table>
+  {{block.super}}
+  {%endblock%}
