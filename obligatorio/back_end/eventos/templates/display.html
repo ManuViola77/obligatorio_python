@@ -2,6 +2,7 @@
 {%block javascript%}
   {%include "templates/javascripts/mensajes_save.js"%}
 {%endblock%}
+{%block nav_menu_nologueado%}{%endblock%}
 {%block header_title%}Lugar{%endblock%}
 {%block nav_menu%}{%endblock%}
 {%block title%} Visualizar Evento "{{E.nombre}}"{%endblock%}
@@ -106,6 +107,6 @@
     </tbody>
   </table>
 
-  <center><button type="button" class="btn btn-default pull-middle" onclick="javascript:window.location.href = '/eventos/'" >Cerrar</button></center>
+  <center><button type="button" class="btn btn-default pull-middle" onclick="javascript:window.location.href = '/back_end/eventos/'" >Cerrar</button></center>
 
 {%endblock%}

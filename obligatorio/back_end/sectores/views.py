@@ -92,7 +92,7 @@ def save(request,lugar,id = None):
                     cantAsientos = asientosActual.count()
                 except Sector.DoesNotExist:
                     messages.error(request,'Identificador no valido')
-                    return redirect('/sectores/'+lugar)
+                    return redirect('/back_end/sectores/'+lugar)
             #si postean form
             do_submit = request.POST.get("do_submit")
             if do_submit:
@@ -176,5 +176,5 @@ def delete(request,lugar,id):
         messages.success(request,"El Sector se ha eliminado correctamente...")
     else:
         messages.error(request,msg)
-    return redirect("/sectores/"+lugar)
+    return redirect("/back_end/sectores/"+lugar)
 

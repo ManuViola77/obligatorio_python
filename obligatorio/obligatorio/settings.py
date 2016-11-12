@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'back_end.apps.BackEndConfig'
+    'back_end.apps.BackEndConfig',
+    'front_end.apps.FrontEndConfig'
 ]
 
 MIDDLEWARE = [
@@ -48,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "back_end.middleware.auth.AuthUser",
 ]
 
 ROOT_URLCONF = 'obligatorio.urls'
@@ -119,5 +121,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
+
+MEDIA_ROOT = os.path.join(BASE_DIR,"imagenes")
+MEDIA_URL = os.path.join("/imagenes/")
 
 STATIC_URL = '/static/'

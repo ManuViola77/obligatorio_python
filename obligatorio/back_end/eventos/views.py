@@ -65,7 +65,7 @@ def save(request,id = None):
                 E = Evento.objects.get(pk=id)
             except Evento.DoesNotExist:
                 messages.error(request,'Identificador no valido')
-                return redirect('/eventos')
+                return redirect('/back_end/eventos')
         #si postean form
         #form = forms(request.POST, request.FILES)
         #if form.is_valid():
@@ -143,20 +143,20 @@ def delete(request,id):
         messages.success(request,"El Evento se ha eliminado correctamente...")
     else:
         messages.error(request,msg)
-    return redirect("/eventos")
+    return redirect("/back_end/eventos")
 
 def display(request,id):
     template    = loader.get_template('eventos/templates/display.html') 
     render      = {} #diccionario para pasar a la vista
     if not id:
         messages.error(request,'Identificador no valido')
-        return redirect('/eventos')
+        return redirect('/back_end/eventos')
     else:
         try:
             E = Evento.objects.get(pk=id)
         except Evento.DoesNotExist:
             messages.error(request,'Identificador no valido')
-            return redirect('/eventos')
+            return redirect('/back_end/eventos')
         render["E"] = E
     
         return HttpResponse(template.render(render,request))

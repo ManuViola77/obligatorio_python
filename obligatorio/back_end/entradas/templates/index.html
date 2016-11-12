@@ -2,6 +2,7 @@
 {%block javascript%}
   {%include "templates/javascripts/mensajes.js"%}
 {%endblock%}
+{%block nav_menu_nologueado%}{%endblock%}
 {%block header_title%}Entradas{%endblock%}
 {%block title%} Entradas del Evento "{{evento.nombre}}"{%endblock%}
 {%block content%}
@@ -20,7 +21,7 @@
       Asiento
     </th>
     <th>
-      <a href="/entradas/save{{evento.id}}/" title ="Agregar Entrada"><span class="glyphicon glyphicon-plus pull-right"></span></a>
+      <a href="/back_end/entradas/save{{evento.id}}/" title ="Agregar Entrada"><span class="glyphicon glyphicon-plus pull-right"></span></a>
     </th>
   </thead>
   {# {%sentencias$} {{variabes}} #}
@@ -40,8 +41,8 @@
         {{E.Asiento.Sector.nombre}} - Asiento {{E.Asiento.numero}}
       </td>
       <td>
-        <a href="/entradas/save{{evento.id}}/{{E.id}}"><span class="glyphicon glyphicon-edit" title="Editar Entrada {{E.Asiento.numero}}"></span></a>
-        <a class="borrar" id="{{E.id}}" href="/entradas/delete{{evento.id}}/{{E.id}}" onclick="return confirm('Seguro que desea eliminar la entrada {{E.Asiento.Sector.nombre}} - Asiento {{E.Asiento.numero}}?');"><span class="glyphicon glyphicon-trash" title="Eliminar Entrada {{E.Asiento.Sector.nombre}} - Asiento {{E.Asiento.numero}}"></span></a>
+        <a href="/back_end/entradas/save{{evento.id}}/{{E.id}}"><span class="glyphicon glyphicon-edit" title="Editar Entrada {{E.Asiento.numero}}"></span></a>
+        <a class="borrar" id="{{E.id}}" href="/back_end/entradas/delete{{evento.id}}/{{E.id}}" onclick="return confirm('Seguro que desea eliminar la entrada {{E.Asiento.Sector.nombre}} - Asiento {{E.Asiento.numero}}?');"><span class="glyphicon glyphicon-trash" title="Eliminar Entrada {{E.Asiento.Sector.nombre}} - Asiento {{E.Asiento.numero}}"></span></a>
       </td>
     </tr>
   </tbody>

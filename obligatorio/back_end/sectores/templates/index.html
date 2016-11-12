@@ -19,6 +19,7 @@
 			}
 		</script>
 {%endblock%}
+{%block nav_menu_nologueado%}{%endblock%}
 {%block header_title%}Sectores{%endblock%}
 {%block title%} Sectores del lugar "{{lugar.nombre}}"{%endblock%}
 {%block content%}
@@ -31,7 +32,7 @@
       Nombre
     </th>
     <th>
-      <a href="/sectores/save{{lugar.id}}/" title ="Agregar Sector"><span class="glyphicon glyphicon-plus pull-right"></span></a>
+      <a href="/back_end/sectores/save{{lugar.id}}/" title ="Agregar Sector"><span class="glyphicon glyphicon-plus pull-right"></span></a>
     </th>
   </thead>
   {# {%sentencias$} {{variabes}} #}
@@ -48,8 +49,8 @@
         <!-- intento llenar con javascript-->
       </td>
       <td>
-        <a href="/sectores/save{{lugar.id}}/{{S.id}}"><span class="glyphicon glyphicon-edit" title="Editar {{S.nombre}}"></span></a>
-        <a class="borrar" id="{{S.id}}" href="/sectores/delete{{lugar.id}}/{{S.id}}" onclick="return confirm('Seguro que desea eliminar el Sector {{S.codigo}} - {{S.nombre}}?');"><span class="glyphicon glyphicon-trash" title="Eliminar {{S.nombre}}"></span></a>
+        <a href="/back_end/sectores/save{{lugar.id}}/{{S.id}}"><span class="glyphicon glyphicon-edit" title="Editar {{S.nombre}}"></span></a>
+        <a class="borrar" id="{{S.id}}" href="/back_end/sectores/delete{{lugar.id}}/{{S.id}}" onclick="return confirm('Seguro que desea eliminar el Sector {{S.codigo}} - {{S.nombre}}?');"><span class="glyphicon glyphicon-trash" title="Eliminar {{S.nombre}}"></span></a>
       </td>
     </tr>
   </tbody>

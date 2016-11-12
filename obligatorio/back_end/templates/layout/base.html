@@ -19,20 +19,36 @@
       {#inicio bloque header#}
       {%block header%}
         <!-- <h1>HEADER APP</h1>-->
+        {%block nav_menu_nologueado%}
+          <nav class="navbar">
+            <div class="container-fluid">
+              <!-- Collect the nav links, forms, and other content for toggling -->
+              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                  <li><a href="/back_end/signin" class="texto">Iniciar Sesi&oacute;n<span class="sr-only texto">(current)</span></a></li>
+                  <li><a href="/back_end/registrar" class="texto">Registrarse<span class="sr-only texto">(current)</span></a></li>
+                </ul>
+              </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+          </nav>
+        {%endblock%}<!-- nav -->
         {%block nav_menu%}
           <nav class="navbar">
             <div class="container-fluid">
               <!-- Brand and toggle get grouped for better mobile display -->
               <div class="navbar-header">
-                <a class="navbar-brand texto" href="/">DCB(Aca Logo)</a>
+                <a class="navbar-brand texto" href="/back_end/">DCB(Aca Logo)</a>
                 <!--<img alt="Brand" src="ticket.jpg">-->
               </div>
               <!-- Collect the nav links, forms, and other content for toggling -->
               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                  <li><a href="/categorias" class="texto">Categor&iacute;as<span class="sr-only texto">(current)</span></a></li>
-                  <li><a href="/lugares" class="texto">Lugares<span class="sr-only">(current)</span></a></li>
-                  <li><a href="/eventos" class="texto">Eventos<span class="sr-only">(current)</span></a></li>
+                  <li><a href="/back_end/categorias" class="texto">Categor&iacute;as<span class="sr-only texto">(current)</span></a></li>
+                  <li><a href="/back_end/lugares" class="texto">Lugares<span class="sr-only">(current)</span></a></li>
+                  <li><a href="/back_end/eventos" class="texto">Eventos<span class="sr-only">(current)</span></a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                  <li><a href="/back_end/signout" class="texto">Cerrar Sesi&oacute;n<span class="sr-only texto">(current)</span></a></li>
                 </ul>
                 {%block nav_search%}
                   {%include "layout/search.html"%}
@@ -56,7 +72,8 @@
     <div class="footer">
       {#inicio bloque footer#}
       {%block footer%}
-        <h5 align="right">Obligatorio Python 2016 - Sisinfo - Pablo Perdomo y Manuela Viola</h5>
+        <br>
+        <h5>Obligatorio Python 2016 - Sisinfo - Pablo Perdomo y Manuela Viola</h5>
       {%endblock%}
       {#fin bloque footer#}
     </div>

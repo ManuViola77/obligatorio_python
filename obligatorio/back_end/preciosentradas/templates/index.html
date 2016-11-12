@@ -2,6 +2,7 @@
 {%block javascript%}
   {%include "templates/javascripts/mensajes.js"%}
 {%endblock%}
+{%block nav_menu_nologueado%}{%endblock%}
 {%block header_title%}Precios de Entradas{%endblock%}
 {%block title%} Precios de Entradas del Evento "{{evento.nombre}}" {%endblock%}
 {%block content%}
@@ -14,7 +15,7 @@
       Precio
     </th>
     <th>
-      <a href="/preciosentradas/save/{{evento.id}}/" title ="Agregar Precio de Entrada"><span class="glyphicon glyphicon-plus pull-right"></span></a>
+      <a href="/back_end/preciosentradas/save/{{evento.id}}/" title ="Agregar Precio de Entrada"><span class="glyphicon glyphicon-plus pull-right"></span></a>
     </th>
   </thead>
   {# {%sentencias$} {{variabes}} #}
@@ -28,8 +29,8 @@
         {{PE.precio}}
       </td>
       <td>
-        <a href="/preciosentradas/save/{{evento.id}}/{{PE.id}}"><span class="glyphicon glyphicon-edit" title="Editar {{PE.nombre}}"></span></a>
-        <a class="borrar" id="{{PE.id}}" href="/preciosentradas/delete/{{evento.id}}/{{PE.id}}" onclick="return confirm('Seguro que desea eliminar el Precio de Entrada del Sector {{PE.Sector.nombre}}?');"><span class="glyphicon glyphicon-trash" title="Eliminar {{PE.nombre}}"></span></a>
+        <a href="/back_end/preciosentradas/save/{{evento.id}}/{{PE.id}}"><span class="glyphicon glyphicon-edit" title="Editar {{PE.nombre}}"></span></a>
+        <a class="borrar" id="{{PE.id}}" href="/back_end/preciosentradas/delete/{{evento.id}}/{{PE.id}}" onclick="return confirm('Seguro que desea eliminar el Precio de Entrada del Sector {{PE.Sector.nombre}}?');"><span class="glyphicon glyphicon-trash" title="Eliminar {{PE.nombre}}"></span></a>
       </td>
     </tr>
   </tbody>

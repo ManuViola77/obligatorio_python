@@ -60,7 +60,7 @@ def save(request,id = None):
                 L = Lugar.objects.get(pk=id)
             except Lugar.DoesNotExist:
                 messages.error(request,'Identificador no valido')
-                return redirect('/lugares')
+                return redirect('/back_end/lugares')
         #si postean form
         do_submit = request.POST.get("do_submit")
         if do_submit:
@@ -116,5 +116,5 @@ def delete(request,id):
         messages.success(request,"El Lugar se ha eliminado correctamente...")
     else:
         messages.error(request,msg)
-    return redirect("/lugares")
+    return redirect("/back_end/lugares")
 

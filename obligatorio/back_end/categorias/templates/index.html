@@ -2,6 +2,7 @@
 {%block javascript%}
   {%include "templates/javascripts/mensajes.js"%}
 {%endblock%}
+{%block nav_menu_nologueado%}{%endblock%}
 {%block header_title%}Categor&iacute;as{%endblock%}
 {%block title%} Categor&iacute;as{%endblock%}
 {%block content%}
@@ -14,7 +15,7 @@
         Nombre
       </th>
       <th>
-        <a href="/categorias/save/" title ="Agregar Categor&iacute;a"><span class="glyphicon glyphicon-plus pull-right"></span></a>
+        <a href="/back_end/categorias/save/" title ="Agregar Categor&iacute;a"><span class="glyphicon glyphicon-plus pull-right"></span></a>
       </th>
     </thead>
     {# {%sentencias$} {{variabes}} #}
@@ -28,8 +29,8 @@
           {{L.nombre}}
         </td>
         <td>
-          <a href="/categorias/save/{{L.id}}"><span class="glyphicon glyphicon-edit" title="Editar {{L.nombre}}"></span></a>
-          <a class="borrar" id="{{L.id}}" href="/categorias/delete/{{L.id}}" onclick="return confirm('Seguro que desea eliminar la categor&iacute;a {{L.codigo}} - {{L.nombre}}?');"><span class="glyphicon glyphicon-trash" title="Eliminar {{L.nombre}}"></span></a>
+          <a href="/back_end/categorias/save/{{L.id}}"><span class="glyphicon glyphicon-edit" title="Editar {{L.nombre}}"></span></a>
+          <a class="borrar" id="{{L.id}}" href="/back_end/categorias/delete/{{L.id}}" onclick="return confirm('Seguro que desea eliminar la categor&iacute;a {{L.codigo}} - {{L.nombre}}?');"><span class="glyphicon glyphicon-trash" title="Eliminar {{L.nombre}}"></span></a>
         </td>
       </tr>
     </tbody>

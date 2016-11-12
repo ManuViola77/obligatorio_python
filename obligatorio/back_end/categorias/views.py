@@ -60,7 +60,7 @@ def save(request,id = None):
                 C = Categoria.objects.get(pk=id)
             except Categoria.DoesNotExist:
                 messages.error(request,'Identificador no valido')
-                return redirect('/categorias')
+                return redirect('/back_end/categorias')
         #si postean form
         do_submit = request.POST.get("do_submit")
         if do_submit:
@@ -116,5 +116,5 @@ def delete(request,id):
         messages.success(request,"La Categoria se ha eliminado correctamente...")
     else:
         messages.error(request,msg)
-    return redirect("/categorias")
+    return redirect("/back_end/categorias")
 
