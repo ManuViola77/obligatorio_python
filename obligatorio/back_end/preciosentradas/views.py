@@ -20,6 +20,7 @@ def index(request,evento):
     buscar = request.GET.get("buscar") # buscar = nombre del campo que quiero o del parametro de url
     pagina = request.GET.get("pagina")
     message = get_messages(request)
+    error = False
     render = {}
     
     if not evento:
@@ -39,7 +40,7 @@ def index(request,evento):
             try:
                 #Query set y cantidad de registros por pagina
                 precioEntrada = precioEntrada.order_by('precio','Sector__nombre') #'-nombre' para descendente
-                paginator = Paginator(precioEntrada,10)
+                paginator = Paginator(precioEntrada,8)
                 #paginado
                 precioEntrada = paginator.page(int(pagina))
             except InvalidPage:
@@ -51,10 +52,7 @@ def index(request,evento):
             except PageNotAnInteger:
                     error = True
                     messages.error(request,"Numero de pagina no valida")
-        else:
-            error = True
-            messages.error(request,"{} no tiene ningun precio de entrada asociado.".format(eventoPrecioEntrada.nombre)) 
-            
+
     render['error'] = error
     render['usuario'] = usuario
     render['rows'] = precioEntrada

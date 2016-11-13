@@ -32,7 +32,7 @@ def index(request):
     try:
         #Query set y cantidad de registros por pagina
         eventos = eventos.order_by('nombre','codigo') #'-nombre' para descendente
-        paginator = Paginator(eventos,10)
+        paginator = Paginator(eventos,8)
         #paginado
         eventos = paginator.page(int(pagina))
     except InvalidPage:

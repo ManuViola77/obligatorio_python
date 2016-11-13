@@ -28,7 +28,7 @@ def index(request):
     try:
         #Query set y cantidad de registros por pagina
         lugares = lugares.order_by('nombre','codigo') #'-nombre' para descendente
-        paginator = Paginator(lugares,10)
+        paginator = Paginator(lugares,8)
         #paginado
         lugares = paginator.page(int(pagina))
     except InvalidPage:

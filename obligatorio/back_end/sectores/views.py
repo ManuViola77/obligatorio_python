@@ -18,6 +18,7 @@ def index(request,lugar):
     buscar = request.GET.get("buscar") # buscar = nombre del campo que quiero o del parametro de url
     pagina = request.GET.get("pagina")
     message = get_messages(request)
+    error = False
     render = {}
     cantAsientos = 0
     
@@ -38,7 +39,7 @@ def index(request,lugar):
             try:
                 #Query set y cantidad de registros por pagina
                 sectores = sectores.order_by('nombre','codigo') #'-nombre' para descendente
-                paginator = Paginator(sectores,10)
+                paginator = Paginator(sectores,8)
                 #paginado
                 sectores = paginator.page(int(pagina))
                 cantAsientos = []
@@ -56,10 +57,7 @@ def index(request,lugar):
             except PageNotAnInteger:
                     error = True
                     messages.error(request,"Numero de pagina no valida")
-        else:
-            error = True
-            messages.error(request,"{} no tiene ningun sector asociado.".format(lugarSector.nombre))  
-             
+   
     render['error'] = error
     render['usuario'] = usuario
     render['rows'] = sectores

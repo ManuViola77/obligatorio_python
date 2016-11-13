@@ -9,6 +9,14 @@
   {%block css%}
     {%include "templates/css/estilosGenerales.css"%}
   {%endblock%}
+  <script type="text/javascript">
+    $(document).ready(function(){
+      (function() {
+          $('.footer').css('position', $(document).height() > $(window).height() ? "inherit" : "fixed");
+      })();
+    });
+  </script>
+
   <meta charset="utf-8">
   <title>{%block header_title%}{%endblock%}</title>
   {%block javascript%} {%endblock%}

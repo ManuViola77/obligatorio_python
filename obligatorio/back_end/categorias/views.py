@@ -28,7 +28,7 @@ def index(request):
     try:
         #Query set y cantidad de registros por pagina
         categorias = categorias.order_by('nombre','codigo') #'-nombre' para descendente
-        paginator = Paginator(categorias,10)
+        paginator = Paginator(categorias,8)
         #paginado
         categorias = paginator.page(int(pagina))
     except InvalidPage:
