@@ -70,8 +70,8 @@ def save(request,id = None):
         #si postean form
         #form = forms(request.POST, request.FILES)
         #if form.is_valid():
-            #E.afiche = request.FILES['afiche']  
-            
+        #E.afiche = request.FILES['afiche']  
+        A = None    
         try:
             if request.POST:
                 print "Entre al post para afiche"
@@ -83,8 +83,8 @@ def save(request,id = None):
                     print "afiche exitoso"
                     render["success"] = "Se grabo ok"
                 else:
-                    print "Error en afiche"
-                    render["error"] = unForm.errors
+                    print "Error en afiche - puede ser que venia vacio"
+                    #render["error"] = unForm.errors
         except Exception as e:
             render["error"] = e    
             

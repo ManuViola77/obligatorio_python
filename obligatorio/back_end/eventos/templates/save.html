@@ -33,7 +33,14 @@
     </div>
     <div class="form-group">
       <label for="archivo">Afiche:</label>
-      <input type="file" name="archivo" class="form-control" id="archivo">
+      <input type="file" name="archivo" class="form-control" id="archivo" accept="image/*" onchange="loadFile(event)">
+      <img id="output" src = "{{MEDIA_URL}}{{E.Afiche.archivo}}"/>
+      <script>
+        var loadFile = function(event) {
+          var output = document.getElementById('output');
+          output.src = URL.createObjectURL(event.target.files[0]);
+        };
+      </script>
     </div>
     <div class="form-group">
       <label for="categoria">Categor&iacute;a</label>

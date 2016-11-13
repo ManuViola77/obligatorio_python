@@ -92,7 +92,11 @@
             <b>Afiche:</b>
           </td>
           <td>
-            <img src="{{MEDIA_URL}}{{A.archivo}}"/>
+            {%if A.archivo%}
+              <img src="{{MEDIA_URL}}{{A.archivo}}"/>
+            {%else%}
+              El evento no tiene afiche asociado
+            {%endif%}
           </td>
         </tr>
 
