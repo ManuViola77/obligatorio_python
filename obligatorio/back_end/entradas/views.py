@@ -77,7 +77,7 @@ def save(request,evento,id = None):
                     E = Entrada.objects.get(pk=id)
                 except Entrada.DoesNotExist:
                     messages.error(request,'Identificador no valido')
-                    return redirect('/back_end/entradas/'+evento)
+                    return redirect('/back_end/eventos/'+evento+'/entradas/')
             else:
                 E = Entrada()
         except Exception as e:
@@ -97,7 +97,7 @@ def save(request,evento,id = None):
         asientos = asientos.order_by('Sector__nombre','numero')
         if not asientos: 
             messages.error(request,"El lugar del evento no tiene asientos asignados.")
-            return redirect('/back_end/entradas/'+evento)
+            return redirect('/back_end/eventos/'+evento+'/entradas/')
         
         try:
             if id:#Update
@@ -105,7 +105,7 @@ def save(request,evento,id = None):
                     E = Entrada.objects.get(pk=id)
                 except Entrada.DoesNotExist:
                     messages.error(request,'Identificador no valido')
-                    return redirect('/back_end/entradas/'+evento)
+                    return redirect('/back_end/eventos/'+evento+'/entradas/')
             #si postean form
             do_submit = request.POST.get("do_submit")
             if do_submit:
@@ -170,5 +170,5 @@ def delete(request,evento,id):
         messages.success(request,"La Entrada se ha eliminado correctamente...")
     else:
         messages.error(request,msg)
-    return redirect("/back_end/entradas/"+evento)
+    return redirect('/back_end/eventos/'+evento+'/entradas/')
 

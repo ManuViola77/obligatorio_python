@@ -79,7 +79,7 @@ def save(request,evento,id = None):
                     PE = PrecioEntrada.objects.get(pk=id)
                 except PrecioEntrada.DoesNotExist:
                     messages.error(request,'Identificador no valido')
-                    return redirect('/back_end/preciosentradas/'+evento)
+                    return redirect('/back_end/eventos/'+evento+'preciosentradas')
             else:
                 PE = PrecioEntrada()
         except Exception as e:
@@ -99,7 +99,7 @@ def save(request,evento,id = None):
         sectores = sectores.order_by('nombre')
         if not sectores: 
             messages.error(request,"El lugar del evento no tiene sectores o ya todos tienen precio de entrada asignado.")
-            return redirect('/back_end/preciosentradas/'+evento)
+            return redirect('/back_end/eventos/'+evento+'/preciosentradas')
         
         try:
             #si postean form
@@ -166,5 +166,5 @@ def delete(request,evento,id):
         messages.success(request,"El Precio de Entrada se ha eliminado correctamente...")
     else:
         messages.error(request,msg)
-    return redirect("/back_end/preciosentradas/"+evento)
+    return redirect('/back_end/eventos/'+evento+'/preciosentradas')
 

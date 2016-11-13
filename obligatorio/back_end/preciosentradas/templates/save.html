@@ -7,7 +7,7 @@
 {%block nav_menu%}{%endblock%}
 {%block title%} {%if PE.id%}Modificar{%else%}Crear{%endif%} Precios de Entradas del Evento "{{evento.nombre}}"{%endblock%}
 {%block content%}
-  <form method="post" action="/back_end/preciosentradas/save/{{evento.id}}/{%if PE.id%}{{PE.id}}{%endif%}">
+  <form method="post" action="/back_end/eventos/{{evento.id}}/preciosentradas/save/{%if PE.id%}{{PE.id}}{%endif%}">
     {%csrf_token%}
     <div class="form-group">
       <label for="sector">Sector</label>
@@ -23,7 +23,7 @@
       <label for="precio">Precio:</label>
       <input type="number" step="any" max="999999" name="precio" class="form-control" id="precio" value="{%if PE.precio%}{{PE.precio}}{%endif%}">
     </div>
-    <button type="button" class="btn btn-default" onclick="javascript:window.location.href = '/back_end/preciosentradas/{{evento.id}}'">Cancelar</button>
+    <button type="button" class="btn btn-default" onclick="javascript:window.location.href = '/back_end/eventos/{{evento.id}}/preciosentradas'">Cancelar</button>
     <button type="submit" class="btn btn-default pull-right" name="do_submit" value="1">{%if PE.id%}Modificar{%else%}Crear{%endif%}</button>
   </form>
 {%endblock%}

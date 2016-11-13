@@ -9,6 +9,7 @@
 {%block content%}
   <form method="post" action="/back_end/eventos/save/{%if E.id%}{{E.id}}{%endif%}" enctype="multipart/form-data">
     {%csrf_token%}
+
     <div class="form-group">
       <label for="codigo">C&oacute;digo:</label>
       <input type="text" maxlength="4" name="codigo" class="form-control" id="codigo" value="{%if E.codigo%}{{E.codigo}}{%endif%}">
@@ -24,7 +25,7 @@
     <!-- NO SE COMO ASIGNAR LA FECHA QUE YA TENGO!-->
     <div class="form-group">
       <label for="fecha">Fecha:</label>
-      <input type="date" name="fecha" class="form-control" id="fecha" value="{%if E.fecha%}{{E.fecha}}{%endif%}">
+      <input type="datetime-local" name="fecha" class="form-control" id="fecha" value="{%if E.fecha%}{{E.fecha}}{%endif%}">
     </div>
     <div class="form-group">
       <label for="detalle">Detalle:</label>

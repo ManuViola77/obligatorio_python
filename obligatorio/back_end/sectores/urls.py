@@ -17,7 +17,7 @@ from django.conf.urls import url
 from back_end.sectores import views
 
 urlpatterns = [
-    url(r'^/(\d+)$', views.index),
-    url(r'^/save(\d+)/(\d+)?$', views.save),
-    url(r'^/delete(\d+)/(\d+)$', views.delete),
+    url(r'^/?$', views.index),
+    url(r'^/save/(\d+)?$', views.save),
+    url(r'^/delete/(\d+)$', views.delete),
 ]
