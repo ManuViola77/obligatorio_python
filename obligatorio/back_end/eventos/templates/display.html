@@ -2,7 +2,6 @@
 {%block javascript%}
   {%include "templates/javascripts/mensajes_save.js"%}
 {%endblock%}
-{%block nav_menu_nologueado%}{%endblock%}
 {%block header_title%}Lugar{%endblock%}
 {%block nav_menu%}{%endblock%}
 {%block title%} Visualizar Evento "{{E.nombre}}"{%endblock%}
@@ -93,21 +92,13 @@
           </td>
           <td>
             {%if A.archivo%}
-              <img src="{{MEDIA_URL}}{{A.archivo}}"/>
+              <img class="imagenChica" src="{{MEDIA_URL}}{{A.archivo}}"/>
             {%else%}
               El evento no tiene afiche asociado
             {%endif%}
           </td>
         </tr>
 
-        <tr>
-          <td>
-
-          </td>
-          <td>
-
-          </td>
-        </tr>
     </tbody>
   </table>
 

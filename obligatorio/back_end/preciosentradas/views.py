@@ -85,8 +85,8 @@ def save(request,evento,id = None):
             render['error'] = e
             
         eventoPrecioEntrada  = Evento.objects.get(pk = evento) #instancio Evento
-        sectores = Sector.objects.filter(LugarSector = eventoPrecioEntrada.Lugar)
-        preciosEntradasYaIngresados = PrecioEntrada.objects.filter(Sector__LugarSector = eventoPrecioEntrada.Lugar)
+        sectores = Sector.objects.filter(Lugar = eventoPrecioEntrada.Lugar)
+        preciosEntradasYaIngresados = PrecioEntrada.objects.filter(Sector__Lugar = eventoPrecioEntrada.Lugar)
         for precioIngresado in preciosEntradasYaIngresados:
             if not id:
                 sectores = sectores.exclude(pk= precioIngresado.Sector.id)

@@ -30,6 +30,8 @@ urlpatterns = [
     url(r'^back_end/signin/{0,1}$', views.signin),
     url(r'^back_end/signout/{0,1}$', views.signout),
     url(r'^back_end/registrar/{0,1}$', views.registrar),
+    url(r'^portal/telefono', include('front_end.telefono.urls')),
+    url(r'^portal/espectaculos', include('front_end.espectaculos.urls')),    
 ]
 
 from django.conf import settings

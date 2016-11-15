@@ -2,7 +2,6 @@
 {%block javascript%}
   {%include "templates/javascripts/mensajes.js"%}
 {%endblock%}
-{%block nav_menu_nologueado%}{%endblock%}
 {%block header_title%}Eventos{%endblock%}
 {%block title%} Eventos{%endblock%}
 {%block content%}
@@ -63,7 +62,7 @@
         <a class="borrar" id="{{E.id}}" href="/back_end/eventos/delete/{{E.id}}" onclick="return confirm('Seguro que desea eliminar el lugar {{E.codigo}} - {{E.nombre}}?');"><span class="glyphicon glyphicon-trash" title="Eliminar {{E.nombre}}"></span></a>
         <a href="/back_end/eventos/display/{{E.id}}"><span class="glyphicon glyphicon-search" title="Visualizar Evento '{{E.nombre}}'"></span></a>
         <a href="/back_end/eventos/{{E.id}}/preciosentradas"><span class="glyphicon glyphicon-usd" title="Agregar Precios de Entradas para {{E.nombre}}"></span></a>
-        <a href="/back_end/eventos/{{E.id}}/entradas"><span class="glyphicon glyphicon-plus" title="Agregar Entradas para {{E.nombre}}"></span></a>
+        <!--<a href="/back_end/eventos/{{E.id}}/entradas"><span class="glyphicon glyphicon-plus" title="Agregar Entradas para {{E.nombre}}"></span></a>-->
       </td>
     </tr>
   </tbody>

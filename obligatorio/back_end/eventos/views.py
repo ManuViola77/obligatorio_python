@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.messages import get_messages
 from django.core.paginator import Paginator,InvalidPage,PageNotAnInteger
 from django import forms
+from datetime import datetime, timedelta
 
 # Create your views here.
 
@@ -60,10 +61,17 @@ def save(request,id = None):
     E           = Evento() #instancio Evento
     categorias = Categoria.objects.all()
     lugares = Lugar.objects.all()
+    hoy = datetime.today()
+    fecha = hoy.date()
+    hora = hoy.time()
     try:
         if id:#Update
             try:
                 E = Evento.objects.get(pk=id)
+                fecha = E.fecha.strftime("%Y-%m-%d")
+                print fecha
+                hora = E.fecha.strftime("%H:%M:%S")
+                print hora
             except Evento.DoesNotExist:
                 messages.error(request,'Identificador no valido')
                 return redirect('/back_end/eventos')
@@ -94,6 +102,17 @@ def save(request,id = None):
             for key,value in request.POST.items():
                 if hasattr(E, key):
                     setattr(E, key, value)            
+            
+            """ if request.POST.get("hora"):
+                #programacion defensiva (validar que exista pk)
+                horaPost = request.POST.get("hora")
+                separoHora = horaPost.split(":")
+                print "separo: {} hour: {}  minute: {}".format(separoHora,separoHora[0],separoHora[1])
+                
+                print E.fecha.__type__
+            else:
+                raise Exception("Se debe ingresar la hora.")"""
+            
             
             #grabo categoria
             if request.POST.get("categoria"):
@@ -128,8 +147,17 @@ def save(request,id = None):
                 pass
             if A:
                 E.Afiche = A
-                
+            
             E.save()
+            
+            print "E.FECHA!!!!!: "+E.fecha
+            fechaSplit = E.fecha.split("T")
+            print fechaSplit
+            print "fechaSplit: "+fechaSplit[0]
+            fecha = fechaSplit[0]
+            print fecha
+            hora = fechaSplit[1]
+            print hora
             
             if not id:
                 E = None
@@ -144,6 +172,8 @@ def save(request,id = None):
     render["E"] = E
     render["categorias"] = categorias
     render["lugares"] = lugares
+    render["fecha"] = fecha
+    render["hora"] = hora
 
     return HttpResponse(template.render(render,request))
 

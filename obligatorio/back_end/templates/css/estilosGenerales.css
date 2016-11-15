@@ -41,6 +41,7 @@
   thead {
     background-color: Navy;
     color: white;
+    width: 100%;
   }
 
   .footer {
@@ -52,11 +53,24 @@
     text-align: right;
   }
 
-  img {
+  .imagenChica {
     width:100%;
     max-width:200px;
     height:100%;
     max-height:200px;
+  }
+
+  .bold {
+    font-weight: bold
+  }
+
+  .tamanio {
+    font-size: 5
+    color: red;
+  }
+
+  .glyphicon-plus {
+    color: white;
   }
 
 </style>

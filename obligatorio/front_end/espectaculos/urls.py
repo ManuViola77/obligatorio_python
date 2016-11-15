@@ -17,8 +17,9 @@ from django.conf.urls import url
 from front_end.espectaculos import views
 
 urlpatterns = [
-    url(r'^/(\d+)$', views.index),
-    url(r'^/detalle/(\d+)$', views.detalle),
+    url(r'^/$', views.index),
+    url(r'^/(\d+)/afiche$', views.afiche),
+    url(r'^/(\d+)$', views.detalle),
 #    url(r'^/save/(\d+)?$', views.save),
 #    url(r'^/delete/(\d+)$', views.delete),
 ]

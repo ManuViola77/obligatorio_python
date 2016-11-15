@@ -28,7 +28,7 @@ def index(request,lugar):
     else:     
         lugarSector = Lugar.objects.get(pk=lugar)
         sectores = Sector.objects.all()
-        sectores = sectores.filter(LugarSector = lugarSector)
+        sectores = sectores.filter(Lugar = lugarSector)
         if sectores: 
             error = False
             if not pagina:
@@ -110,7 +110,7 @@ def save(request,lugar,id = None):
                         raise Exception("Cantidad de Asientos no es un numero")
                 #valido por ej que no exista codigo
                 try:
-                    S2 = Sector.objects.get(codigo=S.codigo,LugarSector = lugarSector)
+                    S2 = Sector.objects.get(codigo=S.codigo,Lugar = lugarSector)
                     if id:
                         if S2 != S:
                             raise Exception("Codigo de Sector {} para el lugar {} ya existe ({})".format(S.codigo,lugarSector.nombre,S2.nombre))
@@ -119,7 +119,7 @@ def save(request,lugar,id = None):
                     
                 except Sector.DoesNotExist:
                     pass
-                S.LugarSector = lugarSector
+                S.Lugar = lugarSector
                 S.save()
                 
                 asientos = Asiento.objects.all()

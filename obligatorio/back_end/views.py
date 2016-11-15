@@ -15,10 +15,11 @@ from back_end.Lugar import Lugar
 
 def index(request):
     #instancio Template
-    template = loader.get_template('templates/back_end/index.html')
-    usuario = request.GET.get("usuario") # buscar = nombre del campo que quiero o del parametro de url
+    #template = loader.get_template('templates/back_end/index.html')
+    #usuario = request.GET.get("usuario") # buscar = nombre del campo que quiero o del parametro de url
     # template tiene parametro {} diccionario de parametros que envio para el template
-    return HttpResponse(template.render({'usuario':usuario},request))
+    #return HttpResponse(template.render({'usuario':usuario},request))
+    return redirect("/back_end/eventos")
 
 def signin(request):
     context = {}
@@ -36,7 +37,7 @@ def signin(request):
             if user is not None:
                 #dejo instancia de usuario en sesion
                 login(request,user = user)
-                return redirect("/back_end")
+                return redirect("/back_end/eventos")
             else:
                 raise Exception("Usuario o Password incorrecto")
     except Exception as e:

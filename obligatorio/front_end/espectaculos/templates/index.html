@@ -1,14 +1,30 @@
-{%extends "templates/layout/base.html"%}
+{%extends "templates/layout/base_frontend.html"%}
 {%block javascript%}
   {%include "templates/javascripts/mensajes.js"%}
 {%endblock%}
-{%block header_title%} Espect&aacute;culos {%endblock%}
-{%block title%} Espect&aacute;culos {%endblock%}
+{%block header_title%} Grilla de Espect&aacute;culos {%endblock%}
+{%block title%}  Grilla de Espect&aacute;culos {%endblock%}
 {%block content%}
+
+<form>
+
+<select name="catBuscar" value = "{{catSel}}" class="form-control" onchange="this.form.submit()">
+  <option value="0">Todas las categor&iacute;as</option>
+  {%for C in categorias%}
+  <!--  Dejar seleccionado -->
+  <option value="{{C.id}}" {%if C.id == catSel%} selected {%endif%}>{{C.nombre}}</option>
+  {%endfor%}
+</select>
+
+<br>
+
 <table class="table table-hover">
   <thead>
     <th>
       Nombre
+    </th>
+    <th>
+      Categor&iacute;a
     </th>
     <th>
       Descripci&oacute;n
@@ -21,7 +37,11 @@
     </th>
     <th>
       Hora
-    </th>    
+    </th>
+    <th>
+    </th>
+    <th>
+    </th>
   </thead>
   {# {%sentencias$} {{variabes}} #}
   {%for L in rows%}
@@ -29,6 +49,9 @@
     <tr>
       <td>
         {{L.nombre}}
+      </td>
+      <td>
+        {{L.Categoria.nombre}}
       </td>
       <td>
         {{L.descripcion}}
@@ -41,13 +64,18 @@
       </td>
       <td>
         {{L.fecha.time}}
-      </td>      
+      </td>
       <td>
-        <a href="/portal/espectaculos/detalle/{{L.id}}"><span class="glyphicon glyphicon-plus" title="Detalle {{L.nombre}}"></span></a>
+        <a href="/portal/espectaculos/{{L.id}}"><span class="glyphicon glyphicon-list" title="Detalle {{L.nombre}}"></span></a>
+      </td>
+      <td>
+        <a href="/portal/espectaculos/{{L.id}}/afiche"><span class="glyphicon glyphicon-picture" title="Afiche {{L.nombre}}"></span></a>
       </td>
     </tr>
   </tbody>
   {%endfor%}
 </table>
 {{block.super}}
+<noscript><input type="submit" value="Submit"></noscript>
+</form>
 {%endblock%}

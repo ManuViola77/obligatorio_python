@@ -4,7 +4,7 @@ from back_end.Lugar import Lugar
 class Sector(models.Model):
     codigo = models.CharField(max_length = 4)
     nombre = models.CharField(max_length = 50)
-    LugarSector = models.ForeignKey(Lugar)
+    Lugar = models.ForeignKey(Lugar)
     
     class Meta:
-        unique_together = ('codigo', 'LugarSector')
+        unique_together = ('codigo', 'Lugar')

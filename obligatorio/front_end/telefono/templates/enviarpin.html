@@ -1,0 +1,19 @@
+{%extends "layout/base_frontend.html"%}
+{%block javascript%}
+  {%include "templates/javascripts/mensajes_save.js"%}
+  {%include "templates/javascripts/mensajes.js"%}
+{%endblock%}
+{%block header_title%}Validar PIN{%endblock%}
+{%block nav_search%}{%endblock%}
+{%block title%}Validar PIN{%endblock%}
+{%block content%}
+  <form method="post" action="/portal/telefono/validarpin/{{idEvento}}/{{idSector}}/{{entradas}}/">
+    {%csrf_token%}
+    <div class="form-group">
+      <label for="pin">Ingrese n&uacute;mero de Pin</label>
+      <input type="text" name="pin" maxlength="4" value="{%if P.valor%}{{P.valor}}{%endif%}" class="form-control" id="pin">
+    </div>
+    <button type="button" class="btn btn-default" onclick="javascript:window.location.href = '/portal/espectaculos/'">Cancelar</button>
+    <button type="submit" class="btn btn-default pull-right" name="do_submit" value="1">Confirmar</button>
+  </form>
+{%endblock%}

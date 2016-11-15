@@ -1,10 +1,17 @@
 {%extends "templates/layout/base.html"%}
 {%block javascript%}
   {%include "templates/javascripts/mensajes_save.js"%}
+  <script type="text/javascript">
+    alert("E.fecha "+{{E}});
+    window.onload = function() {
+      alert("E.fecha");
+      var fecha = document.getElementById('fecha');
+    }
+  </script>
 {%endblock%}
-{%block nav_menu_nologueado%}{%endblock%}
 {%block header_title%}Lugar{%endblock%}
 {%block nav_menu%}{%endblock%}
+
 {%block title%} {%if E.id%}Modificar{%else%}Crear{%endif%} Evento{%endblock%}
 {%block content%}
   <form method="post" action="/back_end/eventos/save/{%if E.id%}{{E.id}}{%endif%}" enctype="multipart/form-data">
@@ -22,10 +29,10 @@
       <label for="descripcion">Descripci&oacute;n:</label>
       <input type="text" maxlength="50" name="descripcion" class="form-control" id="direccion" value="{%if E.descripcion%}{{E.descripcion}}{%endif%}">
     </div>
-    <!-- NO SE COMO ASIGNAR LA FECHA QUE YA TENGO!-->
+
     <div class="form-group">
       <label for="fecha">Fecha:</label>
-      <input type="datetime-local" name="fecha" class="form-control" id="fecha" value="{%if E.fecha%}{{E.fecha}}{%endif%}">
+      <input type="datetime-local" name="fecha" class="form-control" id="fecha" value="{{fecha}}T{{hora}}">
     </div>
     <div class="form-group">
       <label for="detalle">Detalle:</label>
@@ -34,7 +41,7 @@
     <div class="form-group">
       <label for="archivo">Afiche:</label>
       <input type="file" name="archivo" class="form-control" id="archivo" accept="image/*" onchange="loadFile(event)">
-      <img id="output" src = "{{MEDIA_URL}}{{E.Afiche.archivo}}"/>
+      <img id="output" src = "{{MEDIA_URL}}{{E.Afiche.archivo}}" class="imagenChica"/>
       <script>
         var loadFile = function(event) {
           var output = document.getElementById('output');

@@ -1,0 +1,95 @@
+{%extends "templates/layout/base_frontend.html"%}
+{%block javascript%}
+  {%include "templates/javascripts/mensajes_save.js"%}
+{%endblock%}
+{%block nav_menu%}{%endblock%}
+{%block header_title%}Afiche{%endblock%}
+{%block title%}{{E.nombre}}{%endblock%}
+{%block content%}
+
+  {%if A.archivo%}
+    <center> <img src="{{MEDIA_URL}}{{A.archivo}}"/></center>
+  {%endif%}
+
+  <br>
+  <h1 class="header texto">Informaci&oacute;n del espect&aacute;culo</h1>
+
+  <table class = "table table-hover" border="0">
+    <thead>
+
+    </thead>
+
+    <tbody>
+
+        <tr>
+          <td class="bold">
+            Lugar:
+          </td>
+          <td class="">
+            {{E.Lugar.nombre}}
+          </td>
+        </tr>
+
+        <tr>
+          <td class="bold">
+            Fecha:
+          </td>
+          <td class="">
+            {{E.fecha.date}}
+          </td>
+        </tr>
+
+        <tr>
+          <td class="bold">
+            Hora:
+          </td>
+          <td class="">
+            {{E.fecha.time}}
+          </td>
+        </tr>
+
+    </tbody>
+  </table>
+
+  <h2 class="header texto"> Sectores </h2>
+  {%if sectores%}
+    {%for S in sectores%}
+
+    <table class = "table table-hover" border="0">
+      <thead>
+
+      </thead>
+
+      <tbody>
+
+          <tr>
+            <td class="bold" style="width:50px;">
+              Sector:
+            </td>
+            <td style="width:100px;">
+              {{S.sector}}
+            </td>
+            <td class="bold" style="width:100px;">
+              Entradas Disponibles:
+            </td>
+            <td style="width:100px;">
+              {{S.disponibles}}
+            </td>
+            <td class="bold" style="width:100px;">
+              Precio:
+            </td>
+            <td style="width:100px;">
+              ${{S.precio}}
+            </td>
+
+      </tbody>
+    </table>
+
+    {%endfor%}
+  {%else%}
+    <h4>El espectáculo no tiene sectores asociados</h4>
+  {%endif%}
+
+  <center><button type="button" class="btn btn-default pull-middle" onclick="javascript:window.location.href = '/portal/espectaculos/'" >Cerrar</button></center>
+
+{%endblock%}

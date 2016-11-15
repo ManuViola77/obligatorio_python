@@ -1,0 +1,35 @@
+{%extends "layout/base_frontend.html"%}
+{%block javascript%}
+  {%include "templates/javascripts/mensajes_save.js"%}
+{%endblock%}
+{%block header_title%}Ingreso de Tel&eacute;fono{%endblock%}
+{%block nav_search%}{%endblock%}
+{%block title%}Ingreso de Tel&eacute;fono{%endblock%}
+{%block content%}
+  <form method="post" action="{{P.get_absolute_url}}">
+    {%csrf_token%}
+
+    <div class="form-group">
+      <label for="sector">Seleccione Sector</label>
+      <select name="sector" value = "{{sectorId}}" class="form-control" id="sector">
+        <option value="0">Selecciona una opci&oacute;n</option>
+        {%for C in sectores%}
+        <option value="{{C.id}}" {%if C.id == sectorId%}selected {%endif%}>{{C.nombre}}</option>
+        {%endfor%}
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="entradas">Cantidad de entradas</label>
+      <input type="text" name="entradas" maxlength="11" value="{%if cantEntradas %}{{cantEntradas}}{%endif%}" class="form-control" id="numero">
+    </div>
+
+    <div class="form-group">
+      <label for="numero">Ingrese n&uacute;mero de tel&eacute;fono</label>
+      <input type="text" name="numero" maxlength="11" value="{%if T.numero%}{{T.numero}}{%endif%}" class="form-control" id="numero">
+    </div>
+
+    <button type="button" class="btn btn-default" onclick="javascript:window.location.href = '/portal/espectaculos/'">Cancelar</button>
+    <button type="submit" class="btn btn-default pull-right" name="do_submit" value="1">Confirmar</button>
+  </form>
+{%endblock%}
