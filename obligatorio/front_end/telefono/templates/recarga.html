@@ -10,12 +10,12 @@
     {%csrf_token%}
     <div class="form-group">
       <label for="numero">Ingrese n&uacute;mero de tel&eacute;fono</label>
-      <input type="text" name="numero" maxlength="11" value="{%if T.numero%}{{T.numero}}{%endif%}" class="form-control" id="numero">
+      <input type="text" name="numero" maxlength="11" value="{%if numero%}{{numero}}{%endif%}" class="form-control" id="numero">
     </div>
 
     <div class="form-group">
       <label for="saldo">Ingrese valor a acreditar</label>
-      <input type="text" name="saldo" maxlength="11" value="{%if T.saldo%}{{T.saldo}}{%endif%}" class="form-control" id="saldo">
+      <input type="text" name="saldo" maxlength="11" value="{%if saldo%}{{saldo}}{%endif%}" class="form-control" id="saldo">
     </div>
 
     <button type="button" class="btn btn-default" onclick="javascript:window.location.href = '/portal/espectaculos/'">Cancelar</button>

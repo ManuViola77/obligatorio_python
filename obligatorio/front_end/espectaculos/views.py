@@ -113,7 +113,7 @@ def detalle(request, id = None):
     
     # Mensaje de disponibilidad
     if asientos == 0 or restantes == 0:
-        render["error"] = 'Entardas agotadas'
+        render["error"] = 'Entradas agotadas'
     else:
         disponibilidad = restantes * 100 / asientos        
         if disponibilidad > 50:

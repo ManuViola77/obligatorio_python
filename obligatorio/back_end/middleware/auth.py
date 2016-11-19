@@ -10,7 +10,6 @@ class AuthUser(object):
         self.get_response = get_response
         
     def __call__(self,request):
-        print "call AuthUser"
 
         #verifico
         import re #expresiones regulares
@@ -25,6 +24,5 @@ class AuthUser(object):
                     return redirect("/back_end/signin/")
         
         response = self.get_response(request)
-        print "call2 AuthUser"
         #se ejecuta despues de llamar a middleware siguiente
         return response

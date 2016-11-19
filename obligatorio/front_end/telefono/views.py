@@ -18,6 +18,8 @@ from back_end.Sector import Sector
 from back_end.Asiento import Asiento
 from back_end.Entrada import Entrada
 from back_end.PrecioEntrada import PrecioEntrada
+from front_end.ProxyTelefono import ProxyTelefono
+
 
 
 def cantAsientosDisponibles(evento, sector):
@@ -42,14 +44,14 @@ def getAsientoDisponible(evento, sector):
             return A
     
  
-def registarEntrada(evento, sector, telefono):
+def registarEntrada(evento, sector, telefono, documento):
     E           = Entrada()
     E.telefono  = telefono
+    E.documento = documento    
     E.Evento    = evento
     E.Asiento   = getAsientoDisponible(evento, sector)
     E.save()
        
-
 
 def telefono(request, idEvento=None):
     context = {}
@@ -79,11 +81,11 @@ def telefono(request, idEvento=None):
             T.numero        = tel_numero
             
             if not secId or secId == "0":
-                raise Exception("Selecccione sector para continuar")
+                raise Exception("Seleccione sector para continuar")
             try: 
                 secId = decimal.Decimal(secId)
             except decimal.InvalidOperation:
-                raise Exception ("Selecccione sector para continuar")
+                raise Exception ("Seleccione sector para continuar")
             
             if not cantEntradas:
                 raise Exception("Ingrese cantidad de entradas para continuar")            
@@ -167,7 +169,6 @@ def validarpin(request,idEvento=None,secId=None,cantEntradas=None):
     
     
     context = {}
-    T = Telefono()
     P = Pin()
     try:
         if request.POST:
@@ -182,57 +183,21 @@ def validarpin(request,idEvento=None,secId=None,cantEntradas=None):
             
             # Precio de las entradas
             precioEntrada = PrecioEntrada.objects.filter(Evento = E).get(Sector = sector)
-            precio = precioEntrada.precio * cantEntradas
-            
-            try:
-                #GET Telefono para saldo actual                
-                opener = urllib2.build_opener(urllib2.HTTPHandler)
-                #no especifico metodo, por defecto es GET
-                url = "http://localhost/portal/telefono/api/{}".format(P.Telefono.id)
-                datos_tel = urllib2.urlopen(url).read()
-                if datos_tel:
-                    #convierto respuesta a diccionario
-                    datos_tel = json.loads(datos_tel)                     
-
-                saldoActual = datos_tel.get("saldo")
-                saldoActual = decimal.Decimal(saldoActual)
-                
-                if saldoActual < precio:
-                    raise Exception("No tiene saldo suficiente")
-                
-                saldo = saldoActual - precio
-
-                #PUT: actualizo saldo
-                datos = json.dumps({"saldo":str(saldo)})
-                #request con url y datos formato JSON
-                enviar = urllib2.Request(url, data = datos)
-                #le aviso a server que le estoy enviando JSON
-                enviar.add_header('Content-Type','application/json')
-                #especifico metodo
-                enviar.get_method = lambda: 'PUT'
-                #ejecuto request
-                response = opener.open(enviar)
-                # REST put siempre devuelve datos modificados
-                datos_put = response.read()
-                datos_put = json.loads(datos_put)
-                                                
-            except urllib2.HTTPError as e:
-                #por ejemplo server me retorno HTTP Code 404
-                if e.code == 404:
-                    raise Exception("No se encontro el recurso")
-                else:
-                    raise Exception(e.read(),e.code)
-            
+            importe = precioEntrada.precio * cantEntradas
+                                    
+            # Solicito compra al Servidor Externo
+            numTel = P.Telefono.numero
+            proxy = ProxyTelefono()
+            documento = proxy.compra(numTel, importe) 
             
             # Registro entradas
-            for i in range (cantEntradas):
-                print i
-                registarEntrada(E, sector, P.Telefono.numero)
+            for i in range (cantEntradas):                
+                registarEntrada(E, sector, numTel, documento)
                             
             # Borro pin
             P.delete()
                             
-            msg = "Se ha finalizado tu compra, retira tus entradas con el numero de documento {} en {} el dia {}".format("[DOC]", E.Lugar.nombre, E.fecha.date()) 
+            msg = "Se ha finalizado tu compra, retira tus entradas con el numero de documento {} en {} el dia {}".format(documento, E.Lugar.nombre, E.fecha.date()) 
             messages.success(request, msg)
             return redirect("/portal/espectaculos/")
             
@@ -249,79 +214,43 @@ def validarpin(request,idEvento=None,secId=None,cantEntradas=None):
 
 
 def recarga(request):
-    context = {}  
-    T = Telefono()
+    context = {}
+    numTel  = None
+    importe = None    
     do_submit = request.POST.get("do_submit")
     try:
         if do_submit:
-            
-            for key,value in request.POST.items():
-                if hasattr(T, key):
-                    setattr(T, key, value)
-            if not T.numero:
+            numTel  = request.POST.get("numero")
+            importe = request.POST.get("saldo")
+                               
+            if not numTel:
                 raise Exception("Ingrese telefono para continuar")
-            if not T.saldo:
+            if not importe:
                 raise Exception("Ingrese saldo para continuar")
             try: 
-                T.saldo = decimal.Decimal(T.saldo)
+                importe = decimal.Decimal(importe)
             except decimal.InvalidOperation:
-                raise Exception ("Saldo no valido")
-            try:
-                T2 = Telefono.objects.get(numero=T.numero)   
-            except Telefono.DoesNotExist:
-                raise Exception ("Telefono no existe")
-            
-            #PUT, GET a telefono            
-            try:
-                #GET para saldo actual
-                opener = urllib2.build_opener(urllib2.HTTPHandler)
-                #no especifico metodo, por defecto es GET
-                url = "http://localhost/portal/telefono/api/{}".format(T2.id)                
-                datos_tel = urllib2.urlopen(url).read()                
-                if datos_tel: 
-                    #convierto respuesta a diccionario
-                    datos_tel = json.loads(datos_tel)
-                
-                saldoActual = datos_tel.get("saldo")
-                saldoActual = decimal.Decimal(saldoActual)            
-                saldo = saldoActual + T.saldo
+                raise Exception ("Saldo no valido")            
 
-                #PUT
-                datos = json.dumps({"saldo":str(saldo)})
-                #request con url y datos formato JSON
-                enviar = urllib2.Request(url, data = datos)
-                #le aviso a server que le estoy enviando JSON
-                enviar.add_header('Content-Type','application/json')
-                #especifico metodo
-                enviar.get_method = lambda: 'PUT'
-                #ejecuto request
-                response = opener.open(enviar)
-                # REST put siempre devuelve datos modificados
-                datos_put = response.read()
-                datos_put = json.loads(datos_put)
-                context["success"] = "Saldo se ha actualizado correctamente, anterior {}, actual {}".format(datos_tel.get("saldo"),datos_put.get("saldo"))
-                
-            except urllib2.HTTPError as e:
-                #por ejemplo server me retorno HTTP Code 404
-                if e.code == 404:
-                    raise Exception("No se encontro el recurso")
-                else:
-                    raise Exception(e.read(),e.code)
-             
+            proxy = ProxyTelefono()
+            msg = proxy.recarga(numTel, importe)
+            context["success"] = msg  
+            
     except Exception as e:
         context["error"] = e
-        
-    context["T"] = T
-        
+ 
+    context["numero"] = numTel
+    context["saldo"]  = importe
+    
     return render(request,"telefono/templates/recarga.html",context)
 
 #api de telefono
 @api_view(["GET","PUT"])
-def telefono_api(request, pk = None):
+def telefono_api(request, numTel = None):
     if request.method == "GET":
-        if pk:
+        if numTel:
             try:
-                T = Telefono.objects.get(pk=pk)
+                T = Telefono.objects.get(numero = numTel)
             except Telefono.DoesNotExist:
                 return Response(status = status.HTTP_404_NOT_FOUND)
             serializer = TelefonoSerializer(T)
@@ -332,7 +261,7 @@ def telefono_api(request, pk = None):
         
     if request.method == "PUT":
         try:
-            T = Telefono.objects.get(pk = pk)
+            T = Telefono.objects.get(numero = numTel)
         except Telefono.DoesNotExist:
             return Response(status = status.HTTP_404_NOT_FOUND)   
         serializer = TelefonoSerializer(T,data=request.data)
