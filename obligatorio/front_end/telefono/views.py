@@ -5,10 +5,12 @@ from django.contrib import messages
 from django.contrib.messages import get_messages
 from django.core.paginator import Paginator,InvalidPage,PageNotAnInteger
 from rest_framework.decorators import api_view
+from random import randint
 import decimal
 from rest_framework.response import Response
 from rest_framework import status
 import urllib2,json
+
 
 # Create your views here.
 from front_end.Telefono import Telefono, TelefonoSerializer
@@ -267,6 +269,9 @@ def telefono_api(request, numTel = None):
         serializer = TelefonoSerializer(T,data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data) #200 ok
+            data = serializer.data
+            data['documento'] = str(randint(0000,9999999999))
+            #return Response(serializer.data) #200 ok
+            return Response(data) #200 ok
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
     

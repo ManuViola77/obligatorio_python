@@ -1,7 +1,6 @@
 
 import decimal
 import urllib2,json
-from random import randint
 
 class ProxyTelefono(object):
         
@@ -43,11 +42,10 @@ class ProxyTelefono(object):
             response = opener.open(enviar)
             # REST put siempre devuelve datos modificados
             datos_put = response.read()
-                        
-            # retorno documento
-            documento = str(randint(0000,99999999999))
+            datos_put = json.loads(datos_put)
+            
+            documento = datos_put.get("documento")
             return documento 
-
                                             
         except urllib2.HTTPError as e:
             #por ejemplo server me retorno HTTP Code 404
@@ -91,8 +89,9 @@ class ProxyTelefono(object):
             #ejecuto request
             response = opener.open(enviar)
             # REST put siempre devuelve datos modificados
-            datos_put = response.read()
+            datos_put = response.read()            
             datos_put = json.loads(datos_put)
+            
             return "Saldo se ha actualizado correctamente, anterior {}, actual {}".format(datos_tel.get("saldo"),datos_put.get("saldo"))
             
         except urllib2.HTTPError as e:
