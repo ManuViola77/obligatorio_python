@@ -1,11 +1,14 @@
 import _tkinter
-from Tkinter import Tk, Label, Button, Entry, StringVar, DISABLED, NORMAL, END, W, E, Checkbutton
+from Tkinter import Tk, Label, Button, Entry, StringVar, DISABLED, NORMAL, END, W, Checkbutton
 import Tkinter
 
 from Lib.DAO.Strategy.Query import Query
 from Lib.DAO.Strategy.Statements import And,Or,Like
 
 from App.Models.Entrada import back_end_entrada
+from App.Models.Evento import back_end_evento
+from App.Models.Asiento import back_end_asiento
+from App.Models.Sector import back_end_sector
 
 def vaciarPantalla(self):
     # vacio toda la pantalla
@@ -85,10 +88,13 @@ def armarPantalla(root,entrada,i):
         Tkinter.Label(root, text= e.get("documento"), borderwidth=5 ).grid(row=i,column=1) 
         i += 1
         Tkinter.Label(root, text= "Evento", borderwidth=5 ).grid(row=i,column=0) 
-        Tkinter.Label(root, text= e.get("Evento_id"), borderwidth=5 ).grid(row=i,column=1) 
+        Evento = getEntidad(back_end_evento(), e.get("Evento_id"))
+        Tkinter.Label(root, text= Evento.nombre, borderwidth=5 ).grid(row=i,column=1) 
         i += 1
+        Asiento = getEntidad(back_end_asiento(), e.get("Asiento_id"))
+        Sector = getEntidad(back_end_sector(), Asiento.Sector_id)
         Tkinter.Label(root, text= "Asiento", borderwidth=5 ).grid(row=i,column=0) 
-        Tkinter.Label(root, text= e.get("Asiento_id"), borderwidth=5 ).grid(row=i,column=1) 
+        Tkinter.Label(root, text= "{} - {}".format(Sector.nombre,Asiento.numero), borderwidth=5 ).grid(row=i,column=1) 
         i += 1
         Tkinter.Label(root, text= "usada", borderwidth=5 ).grid(row=i,column=0) 
         usadaVar = Tkinter.IntVar()
@@ -102,7 +108,14 @@ def armarPantalla(root,entrada,i):
         i += 1
         root.add_button = Button(root, text="Actualizar", command=lambda: actualizar(root,e,usadaVar)).grid(row=i, column=3)
         i += 1
-        
+
+def getEntidad(E, id):
+    Q = Query(E)
+    Q.add(And(field = "id", value = id))
+    if E.loadQuery(Q):
+        return E
+    return None
+     
 def actualizar(self,e,usadaVar):
     E = back_end_entrada()
     Q = Query(E)
