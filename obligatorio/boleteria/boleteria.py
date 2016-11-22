@@ -1,5 +1,5 @@
 import _tkinter
-from Tkinter import Tk, Label, Button, Entry, StringVar, DISABLED, NORMAL, END, W, Checkbutton
+from Tkinter import Tk, Label, Button, Entry, StringVar, DISABLED, NORMAL, END, W, Checkbutton, Variable
 import Tkinter
 
 from Lib.DAO.Strategy.Query import Query
@@ -36,14 +36,14 @@ def agregarDatos(self,filtroTelefono,filtroDocumento,i):
     documento.grid(row=i, column=1) 
     documento.insert(END, filtroDocumento)
     Tkinter.Label(root, text=" ").grid(row=i, column=2, sticky=W)
-    root.add_button = Button(root, text="Buscar", command=lambda: buscar(root,telefono,documento)).grid(row=i, column=3)
+    root.add_button = Button(root, text="Buscar", command=lambda: buscar(root,telefono.get(),documento.get())).grid(row=i, column=3)
     i += 1
 
 
 def buscar(self,telefono,documento):    
     E = back_end_entrada()
-    self.filtroTelefono = telefono.get()
-    self.filtroDocumento = documento.get()
+    self.filtroTelefono = telefono
+    self.filtroDocumento = documento
     #print " en buscar, filtroTelefono: {} filtroDocumento: {}".format(self.filtroTelefono,self.filtroDocumento)
     
     vaciarPantalla(self)
@@ -78,37 +78,42 @@ def buscar(self,telefono,documento):
 def armarPantalla(root,entrada,i):
     Tkinter.Label(root, text="").grid(row=i)
     i += 1
-    Tkinter.Label(root, text="Entrada", font = "Helvetica 16 bold italic").grid(row=i)
+    Tkinter.Label(root, text="Entradas", font = "Helvetica 16 bold italic").grid(row=i)
     i += 1
-    for e in entrada: #deberia ser una sola...
-        Tkinter.Label(root, text= "Telefono", borderwidth=5 ).grid(row=i,column=0) 
-        Tkinter.Label(root, text= e.get("telefono"), borderwidth=5 ).grid(row=i,column=1) 
-        i += 1
-        Tkinter.Label(root, text= "Documento", borderwidth=5 ).grid(row=i,column=0) 
-        Tkinter.Label(root, text= e.get("documento"), borderwidth=5 ).grid(row=i,column=1) 
-        i += 1
-        Tkinter.Label(root, text= "Evento", borderwidth=5 ).grid(row=i,column=0) 
-        Evento = getEntidad(back_end_evento(), e.get("Evento_id"))
-        Tkinter.Label(root, text= Evento.nombre, borderwidth=5 ).grid(row=i,column=1) 
-        i += 1
+    primeraVez = True
+    cantSinUsar = 0
+    for e in entrada: #pueden ser muchas porque se pueden comprar n entradas juntas
+        if primeraVez: #solo la primera vez imprimo datos comunes a todas las entradas
+            Tkinter.Label(root, text= "Telefono", borderwidth=5 ).grid(row=i,column=0) 
+            Tkinter.Label(root, text= e.get("telefono"), borderwidth=5 ).grid(row=i,column=1) 
+            i += 1
+            Tkinter.Label(root, text= "Documento", borderwidth=5 ).grid(row=i,column=0) 
+            Tkinter.Label(root, text= e.get("documento"), borderwidth=5 ).grid(row=i,column=1) 
+            i += 1
+            Tkinter.Label(root, text= "Evento", borderwidth=5 ).grid(row=i,column=0) 
+            Evento = getEntidad(back_end_evento(), e.get("Evento_id"))
+            Tkinter.Label(root, text= Evento.nombre, borderwidth=5 ).grid(row=i,column=1) 
+            i += 1
+            primeraVez = False
         Asiento = getEntidad(back_end_asiento(), e.get("Asiento_id"))
         Sector = getEntidad(back_end_sector(), Asiento.Sector_id)
         Tkinter.Label(root, text= "Asiento", borderwidth=5 ).grid(row=i,column=0) 
         Tkinter.Label(root, text= "{} - {}".format(Sector.nombre,Asiento.numero), borderwidth=5 ).grid(row=i,column=1) 
-        i += 1
-        Tkinter.Label(root, text= "usada", borderwidth=5 ).grid(row=i,column=0) 
-        usadaVar = Tkinter.IntVar()
-        usada = Checkbutton(root, variable=usadaVar)
-        usada.grid(row=i,column=1)
+        Tkinter.Label(root, text= "Usada", borderwidth=5 ).grid(row=i,column=2) 
         used = e.get("usada")
         if used:
-            usada.select()
+            Tkinter.Label(root, text= "Si", borderwidth=5 ).grid(row=i,column=3) 
         else:
-            usada.deselect()
+            Tkinter.Label(root, text= "No", borderwidth=5 ).grid(row=i,column=3) 
+            cantSinUsar += 1
+            idActual = e.get("id")
+            root.add_button = Button(root, text="Usar Entrada", command=lambda e=e: actualizar(root,e)).grid(row=i, column=4)
         i += 1
-        root.add_button = Button(root, text="Actualizar", command=lambda: actualizar(root,e,usadaVar)).grid(row=i, column=3)
+    if cantSinUsar > 1:
+        Tkinter.Label(root, text= "", borderwidth=5 ).grid(row=i,column=0) 
         i += 1
-
+        root.add_button = Button(root, text="Usar Todas las Entradas", command=lambda: actualizarTodas(root,entrada)).grid(row=i, column=4)
+        i += 1
 def getEntidad(E, id):
     Q = Query(E)
     Q.add(And(field = "id", value = id))
@@ -116,18 +121,19 @@ def getEntidad(E, id):
         return E
     return None
      
-def actualizar(self,e,usadaVar):
+def actualizar(self,entrada):
+    #print "eId: "+str(eId)
     E = back_end_entrada()
     Q = Query(E)
-    Q.add(And(field = "id", value = e.get("id")))
+    Q.add(And(field = "id", value = entrada.get('id')))
     E.loadQuery(Q)
     Q2 = Query(E)
-    Q2.add(And(field = "id",value = e.get("id")))
-    E.usada = usadaVar.get()
+    Q2.add(And(field = "id",value = entrada.get('id')))
+    E.usada = 1
     E.save() 
     #devuelvo cartel de exito y vacio pantalla dejando solo para ingresar telefono y documento.    
-    self.filtroDocumento = ""
-    self.filtroTelefono = ""
+    self.filtroDocumento = entrada.get("documento")
+    self.filtroTelefono = entrada.get("telefono")
     
     vaciarPantalla(self)
     inicioPantalla(self)
@@ -135,7 +141,34 @@ def actualizar(self,e,usadaVar):
     Tkinter.Label(self, text="La entrada se actualizo con exito",fg="darkgreen",font = "bold").grid(row=i, sticky=W, columnspan=10)
     i += 1
     agregarDatos(self,self.filtroTelefono,self.filtroDocumento,i)    
+    buscar(self,self.filtroTelefono,self.filtroDocumento)    
+    
+    
+def actualizarTodas(self,entradas):
+    #print "eId: "+str(eId)
+    for entrada in entradas:
+        E = back_end_entrada()
+        Q = Query(E)
+        Q.add(And(field = "id", value = entrada.get('id')))
+        E.loadQuery(Q)
+        Q2 = Query(E)
+        Q2.add(And(field = "id",value = entrada.get('id')))
+        E.usada = 1
+        E.save() 
         
+    #devuelvo cartel de exito y vacio pantalla dejando solo para ingresar telefono y documento.    
+    self.filtroDocumento = entrada.get("documento")
+    self.filtroTelefono = entrada.get("telefono")
+    
+    vaciarPantalla(self)
+    inicioPantalla(self)
+    i = 1
+    Tkinter.Label(self, text="La entrada se actualizo con exito",fg="darkgreen",font = "bold").grid(row=i, sticky=W, columnspan=10)
+    i += 1
+    agregarDatos(self,self.filtroTelefono,self.filtroDocumento,i)    
+    buscar(self,self.filtroTelefono,self.filtroDocumento)      
+    
+    
 #comienza la pantalla de la boleteria
 
 root = Tkinter.Tk()
@@ -147,5 +180,5 @@ inicioPantalla(root)
 i = 1
 agregarDatos(root,root.filtroTelefono,root.filtroDocumento,i)
 
-root.geometry("500x400")
+root.geometry("500x600")
 root.mainloop()

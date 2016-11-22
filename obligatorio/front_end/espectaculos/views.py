@@ -153,7 +153,8 @@ def afiche(request, id):
                 precio = 0
                 for precioS in precioSector:
                     precio = precioS.precio
-                sectoresConPrecios.append({'sector':sector.nombre,'disponibles':str(cantDisponibles),'precio':precio})
+                if precio > 0:
+                    sectoresConPrecios.append({'sector':sector.nombre,'disponibles':str(cantDisponibles),'precio':precio})
         except Evento.DoesNotExist:
             messages.error(request,'Identificador no valido')
             return redirect('/back_end/eventos')

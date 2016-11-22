@@ -68,7 +68,12 @@ def telefono(request, idEvento=None):
             messages.error(request,'Espectaculo no valido')
             return redirect('/portal/espectaculos/')
         
-    sectores        = Sector.objects.filter(Lugar = E.Lugar)
+    preciosEntradas = PrecioEntrada.objects.filter(Evento_id = E.id)
+    sectores = []
+    for precioEntrada in preciosEntradas:
+        sector = Sector.objects.get(id = precioEntrada.Sector_id)
+        sectores.append({'id':sector.id,'codigo':sector.codigo,'nombre':sector.nombre,'precio':precioEntrada.precio})
+    
     secId           = 0
     cantEntradas    = 0
         
@@ -123,6 +128,7 @@ def telefono(request, idEvento=None):
         
     context['T'] = T
     context['P'] = P
+    context['E'] = E
     context['sectores']     = sectores
     context['sectorId']     = decimal.Decimal(secId)
     context['cantEntradas'] = cantEntradas
@@ -182,6 +188,7 @@ def validarpin(request,idEvento=None,secId=None,cantEntradas=None):
                 P = Pin.objects.get(valor = P.valor)
             except Pin.DoesNotExist:
                 raise Exception("Numero de PIN invalido")
+
             
             # Precio de las entradas
             precioEntrada = PrecioEntrada.objects.filter(Evento = E).get(Sector = sector)

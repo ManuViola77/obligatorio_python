@@ -4,7 +4,7 @@
 {%endblock%}
 {%block header_title%}Ingreso de Tel&eacute;fono{%endblock%}
 {%block nav_search%}{%endblock%}
-{%block title%}Ingreso de Tel&eacute;fono{%endblock%}
+{%block title%}Compra de Entradas para {{E.nombre}}{%endblock%}
 {%block content%}
   <form method="post" action="{{P.get_absolute_url}}">
     {%csrf_token%}
@@ -14,7 +14,7 @@
       <select name="sector" value = "{{sectorId}}" class="form-control" id="sector">
         <option value="0">Selecciona una opci&oacute;n</option>
         {%for C in sectores%}
-        <option value="{{C.id}}" {%if C.id == sectorId%}selected {%endif%}>{{C.nombre}}</option>
+        <option value="{{C.id}}" {%if C.id == sectorId%}selected {%endif%}>{{C.nombre}} - ${{C.precio}}</option>
         {%endfor%}
       </select>
     </div>
